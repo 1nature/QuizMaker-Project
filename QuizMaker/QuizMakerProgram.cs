@@ -140,7 +140,7 @@
                     {
                         overallAnswerCounter += correctAnswerCounter;
                     }
-                    Console.WriteLine(correctAnswerCounter); //for checks
+                    Console.WriteLine(correctAnswerCounter); //for check
                     QuizMakerUIMethods.WriteEmptyLine();
                 }
                 break;
