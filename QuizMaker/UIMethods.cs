@@ -2,7 +2,7 @@
 
 namespace QuizMaker
 {
-    public static class QuizMakerUIMethods
+    public static class UIMethods
     {
         public static void GameWelcomeMessage()
         {
@@ -22,7 +22,7 @@ namespace QuizMaker
         {
             Console.WriteLine("Enter '1' to make a bet, or '0' to quit.");
             int makeQuizDecision = int.Parse(Console.ReadLine());
-            return (makeQuizDecision == QuizMakerConstants.QUIZ_DECISION_YES);
+            return (makeQuizDecision == Constants.QUIZ_DECISION_YES);
         }
 
         public static void WriteEmptyLine()

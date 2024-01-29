@@ -1,6 +1,6 @@
 ﻿namespace QuizMaker
 {
-    public static class QuizMakerLogicMethods
+    public static class LogicMethods
     {
         /// <summary>
         /// 
