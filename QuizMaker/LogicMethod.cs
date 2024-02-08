@@ -1,7 +1,54 @@
 ﻿namespace QuizMaker
 {
-    public static class LogicMethods
+    public static class LogicMethod
     {
+        
+        public static void UserQuestion(string newQuestion)
+        {
+            Console.WriteLine(newQuestion);
+            //UIMethod.WriteEmptyLine();
+        }
+
+        public static void UserAnswerOptions(List<string> answerVariables)
+        {
+
+            foreach (string variable in answerVariables)
+            {
+                Console.WriteLine(variable);
+            }
+        }
+
+        public static void CombineQuestionAndAnswer (string mainQuestion, List<string>answerVariables)
+        {
+            //answerVariables.Add(mainQuestion);
+            answerVariables.Insert(0, mainQuestion + "\n");
+            foreach (string variable in answerVariables)
+            {
+                Console.WriteLine(variable);
+            }
+            
+            //Console.WriteLine (answerVariables);
+            //may it should be a return instead of void?
+            //var answer = answerVariables.ToString();
+            //List<string> men = new List<string>();
+            //men = answerVariables;
+            //return men;
+            //return answer.ToString();
+        }
+
+        public static List<string> CombineQnAnswer(string mainQuestion, List<string> answerVariables)
+        {
+            answerVariables.Insert(0, mainQuestion + "\n");
+            return answerVariables;
+        }
+
+        //public static int CountCombinedAnswer(List<string> theCounter)
+        //{
+        //    int countQnA = 0;
+        //}
+
+
+
         /// <summary>
         /// 
         /// </summary>

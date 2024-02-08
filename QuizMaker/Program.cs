@@ -1,4 +1,7 @@
-﻿namespace QuizMaker
+﻿using System.Xml.Serialization;
+using static QuizMaker.QnAClass;
+
+namespace QuizMaker
 {
     internal class Program
     {
@@ -7,148 +10,95 @@
             bool continuePlaying = true;
             int overallAnswerCounter = 0;
 
-            UIMethods.GameWelcomeMessage();
+            UIMethod.QuizWelcomeMessage();
+            UIMethod.WriteEmptyLine();
 
-            //QuizQuestionandAnswer firstQnA = new QuizQuestionandAnswer();
-            //firstQnA.QuestionText = "What is the capital of the United Kingdom?";
-            //firstQnA.OptionA = "Berlin";
-            //firstQnA.OptionB = "Ottawa";
-            //firstQnA.OptionC = "London";
-            //firstQnA.OptionD = "Abuja";
-            //firstQnA.SetTheAnswer(firstQnA.OptionC);
+            var QuestionList = new List<QuestionandAnswer>();
 
-            //QuizQuestionandAnswer secondQnA = new QuizQuestionandAnswer();
-            //secondQnA.QuestionText = "What is the my favourite sports team?";
-            //secondQnA.OptionA = "Arsenal";
-            //secondQnA.OptionB = "Bayern Munich";
-            //secondQnA.OptionC = "Enyimba";
-            //secondQnA.OptionD = "Rapid Vienna";
-            //secondQnA.SetTheAnswer(secondQnA.OptionA);
-
-            //QuizQuestionandAnswer thirdQnA = new QuizQuestionandAnswer();
-            //secondQnA.QuestionText = "Which country was Elon Musk born?";
-            //secondQnA.OptionA = "Nigeria";
-            //secondQnA.OptionB = "United States of America";
-            //secondQnA.OptionC = "Canada";
-            //secondQnA.OptionD = "South Africa";
-            //secondQnA.SetTheAnswer(thirdQnA.OptionD);
-
-            //QuizQuestionandAnswer fourthQnA = new QuizQuestionandAnswer();
-            //secondQnA.QuestionText = "Which planet in the Milky Way is the hottest?";
-            //secondQnA.OptionA = "Venus";
-            //secondQnA.OptionB = "Earth";
-            //secondQnA.OptionC = "Uranus";
-            //secondQnA.OptionD = "Saturn";
-            //secondQnA.SetTheAnswer(fourthQnA.OptionA);
-
-            var random = new Random();
-
-            UIMethods.GameInstruction();
-
-            continuePlaying = UIMethods.PlayQuizDecision();
+            continuePlaying = UIMethod.QuizzerDecision();
+            UIMethod.WriteEmptyLine();
 
             if (!continuePlaying)
             {
-                UIMethods.GameQuitMessage();
+                UIMethod.DisplayQuitMessage();
             }
-
-
-            while (continuePlaying)
+            else
             {
-                UIMethods.WriteEmptyLine();
+                UIMethod.NumberOfQuestionMessage();
+                int numberOfQuizzerQuestions = int.Parse(Console.ReadLine());
 
-                List<QuizQuestionandAnswer> listOfQuizzes = new List<QuizQuestionandAnswer>();
-                listOfQuizzes.Add(new QuizQuestionandAnswer());
-
-
-                listOfQuizzes.Add(listOfQuizzes.First());
-                Console.WriteLine(listOfQuizzes.First());
-
-                //List<object> listOfQuizzes = new List<object>();
-                //listOfQuizzes.Add();
-
-
-                foreach (var quiz in listOfQuizzes)
+                int questionPosition = 0; int answerPosition = 0;
+                for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
                 {
-                    Console.WriteLine(quiz);
-                    //Console.WriteLine($"quiz: {0}", quiz.QuestionText, quiz.OptionA, quiz.OptionB, quiz.OptionC, quiz.OptionD);
+                    var EachQuestionInput = new QuestionandAnswer();
+                    EachQuestionInput.QuestionText = UIMethod.DisplayQuizzerInstruction();
+                    UIMethod.WriteEmptyLine();
+
+                    int numberOfOptions = UIMethod.GiveNumberOfOptions();
+                    UIMethod.WriteEmptyLine();
+                    UIMethod.ShowOptionsMessage();
+
+                    for (int optionIndex = 0; optionIndex < numberOfOptions; optionIndex++)
+                    {
+                        string quizAnswerOptions = UIMethod.AddTheOption();
+                        EachQuestionInput.ListofQuestionandAnswers.Add(quizAnswerOptions);
+                    }
+
+                    UIMethod.WriteEmptyLine();
+                    UIMethod.ShowCorrectAnswerInputMessage();
+                    EachQuestionInput.CorrectAnswerText = UIMethod.AddCorrectOption();
+                    UIMethod.WriteEmptyLine();
+
+                    QuestionList.Add(EachQuestionInput);
                 }
 
-                //var arrayOfQuizQuestions = new QuizQuestionandAnswer[] { firstQnA, secondQnA, thirdQnA, fourthQnA };
-                //int indexOfQuizQuestions = random.Next(arrayOfQuizQuestions.Length);
-                //var randomlySelectedQuizQuestion = arrayOfQuizQuestions[indexOfQuizQuestions];
+                XmlSerializer writer = new XmlSerializer(typeof(List<QuestionandAnswer>));
+                var path = @"QuestionList.xml";
+                using (FileStream file = File.Create(path))
+                {
+                    writer.Serialize(file, QuestionList);
+                }
+                //To the user
+                Console.WriteLine($"There are {numberOfQuizzerQuestions} questions available");
 
+                using (FileStream file = File.OpenRead(path))
+                {
+                    QuestionList = writer.Deserialize(file) as List<QuestionandAnswer>;
+                }
 
-                //LC Example
-                //List < QuizQuestionandAnswer > qnaList = new();
-
-                //var item = qnaList[indexOfQuizQuestions];
-
-                ////gameplay 
-
-                //qnaList.Remove(item);
-
-
-
-                //if (randomlySelectedQuizQuestion != null && randomlySelectedQuizQuestion == arrayOfQuizQuestions[0])
-                //{
-                //    UIMethods.WriteEmptyLine();
-                //    Console.WriteLine(randomlySelectedQuizQuestion.QuestionText);
-                //    UIMethods.WriteEmptyLine();
-
-                //    string userAnswer = (Console.ReadLine()).ToLower();
-                //    UIMethods.WriteEmptyLine();
-                //    string correctAnswer = firstQnA.SetTheAnswer(firstQnA.OptionC).ToLower();
-
-                //    int correctAnswerCounter = UIMethods.AnswerCounter(userAnswer, correctAnswer);
-                //    UIMethods.WriteEmptyLine();
-
-                //    if (correctAnswerCounter >= Constants.MINIMUM_QUIZ_SCORE)
-                //    {
-                //        overallAnswerCounter += correctAnswerCounter;
-                //    }
-                //    Console.WriteLine(correctAnswerCounter); //for checks
-                //    UIMethods.WriteEmptyLine();
-
-                //}
-
-
-                break;
+                Console.WriteLine(QuestionList.Count);
+                Console.WriteLine(QuestionList.ToString);
+                
+                //var EachQuestionOutput = new QuestionandAnswer();
             }
+
+
+
+
+            //start again
+            UIMethod.DisplayUserInstruction();
+            //LogicMethod.UserQuestion(TheQuiz.QuestionText);
+            UIMethod.WriteEmptyLine();
+            //LogicMethod.UserAnswerOptions(TheQuiz.ListofQuestionandAnswers);
+            string userAnswer = UIMethod.TakeUserAnswer();
+            UIMethod.WriteEmptyLine();
+
+            //if (userAnswer != TheQuiz.CorrectAnswer)
+            //{
+            //    UIMethod.LossMessage();
+            //}
+            //else
+            //{
+            //    UIMethod.WinMessage();
+            //}
+
+
+
+
         }
     }
 }
 
-public class QuizQuestionandAnswer
-{
-
-    public string QuestionText;
-    public string OptionA;
-    public string OptionB;
-    public string OptionC;
-    public string OptionD;
-
-
-    public string SetTheCorrectAnswer(string correctAnswer)
-    {
-        string trueAnswer = correctAnswer;
-        return trueAnswer;
-    }
-
-    public string SetTheAnswer(string answerOption)
-    {
-        string answer = answerOption;
-        return answer;
-    }
-
-
-    public string[] GetOption()
-    {
-        string[] options = { "Berlin", "Ottawa", "London", "Abuja" };
-        //Index of? Check the link on my Uni computer
-        return options;
-    }
-}
 
 
 
