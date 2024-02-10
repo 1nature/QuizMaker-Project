@@ -15,13 +15,9 @@ namespace QuizMaker
             Console.WriteLine("You have decided not to play the quiz game.");
         }
 
-        public static void GameInstruction()
+        public static bool StoreQuestion()
         {
-            Console.WriteLine("There are four questions in this game.Please enter 1 to answer a question, or 0 to exit\n");
-        }
-        public static bool QuizzerDecision()
-        {
-            Console.WriteLine("Enter '1' to ask a question, or '0' to quit.\n");
+            Console.WriteLine("Enter '1' to store question(s), or '0' to quit.\n");
             int makeQuizDecision = int.Parse(Console.ReadLine());
             return (makeQuizDecision == Constant.QUIZ_DECISION_YES);
         }
@@ -33,30 +29,34 @@ namespace QuizMaker
 
         public static void NumberOfQuestionMessage()
         {
-            Console.WriteLine("State the number of questions you would like to ask the user\n");
-            Console.WriteLine("How many questions would you like to attempt?\n");
+            Console.WriteLine("How many questions would you like to store?\n");
         }
 
         public static void WinMessage()
         {
-            Console.WriteLine("Correct answer\n");
+            Console.WriteLine("Correct answer. You have a score\n");
         }
 
         public static void LossMessage()
         {
-            Console.WriteLine("Incorrect answer\n");
+            Console.WriteLine("Incorrect answer. You have no score\n");
         }
 
-        public static string DisplayQuizzerInstruction()
+        public static void NoMoreQuestion()
         {
-            Console.WriteLine("Input the question you would like to ask\n");
+            Console.WriteLine("There are no more questions left to answer. Thank you for your effort\n");
+        }
+        public static string DisplayQuizzerInstruction(int questionInputTracker)
+        {
+            Console.WriteLine($"Input the question number: {questionInputTracker}\n");
+            //Console.WriteLine("Input the question you would like to ask\n");
             string quizzerReply = Console.ReadLine();
             return quizzerReply;
         }
 
         public static int GiveNumberOfOptions()
         {
-            Console.WriteLine("Please input the number of options to your question?\n");
+            Console.WriteLine("Input the number of options to your question?\n");
 
             int numberOfOptions = int.Parse(Console.ReadLine());
             return numberOfOptions;
@@ -66,11 +66,20 @@ namespace QuizMaker
         {
             Console.WriteLine("Input your options one after the other. One of them must be the correct answer\n");
         }
-
-        public static void ShowCorrectOptionMessage()
+        public static bool AnswerAnotherQuestion()
         {
-            Console.WriteLine("Input the correct option to your question");
+            Console.WriteLine("*********************************************");
+            Console.WriteLine("Enter '1' to answer another question, or '0' to quit the game.");
+            int newQuestion = int.Parse(Console.ReadLine());
+            UIMethod.WriteEmptyLine();
+            return (newQuestion == Constant.QUIZ_DECISION_YES);
+        }
 
+        public static void CalculateWinningScore(int currentScore, int maxScore)
+        {
+            Console.WriteLine("***********YOUR FINAL SCORE**************");
+            int result = (currentScore / maxScore) * 100;
+            Console.WriteLine($"You scored {currentScore} question(s) out of {maxScore} OR {result}%");
         }
 
         public static string AddTheOption()
@@ -81,14 +90,13 @@ namespace QuizMaker
 
         public static string AddCorrectOption()
         {
-            //UIMethod.WriteEmptyLine();
             string correctOption = Console.ReadLine();
             return correctOption;
         }
 
         public static void ShowCorrectAnswerInputMessage()
         {
-            Console.WriteLine("Input the correct answer\n");
+            Console.WriteLine("Input the correct answer to your question. It will not be shown to the user\n");
         }
 
 
@@ -96,8 +104,6 @@ namespace QuizMaker
         {
             Console.WriteLine("Please select from the options shown to answer the question");
             Console.WriteLine("You should type in your answer\n");
-            //There are x questions,
-            //Select which question to answer from x
         }
 
 
@@ -108,19 +114,5 @@ namespace QuizMaker
             return theUserAnswer;
         }
 
-        public static int AnswerCounter(string firstVariable, string secondVariable)
-        {
-            int singleQuestionCounter = 0;
-            if (firstVariable != secondVariable)
-            {
-                LossMessage();
-            }
-            else
-            {
-                singleQuestionCounter++;
-                WinMessage();
-            }
-            return singleQuestionCounter;
-        }
     }
 }

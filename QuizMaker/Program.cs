@@ -7,18 +7,21 @@ namespace QuizMaker
     {
         static void Main(string[] args)
         {
-            bool continuePlaying = true;
-            int overallAnswerCounter = 0;
+            bool continueStoringQuestion = true;
+            bool continueAnsweringQuestion = true;
+            int totalWinCounter = 0;
+            int totalAnswerCounter = 0;
+            int questionInputCounter = 0;
 
             UIMethod.QuizWelcomeMessage();
             UIMethod.WriteEmptyLine();
 
             var QuestionList = new List<QuestionandAnswer>();
 
-            continuePlaying = UIMethod.QuizzerDecision();
+            continueStoringQuestion = UIMethod.StoreQuestion();
             UIMethod.WriteEmptyLine();
 
-            if (!continuePlaying)
+            if (!continueStoringQuestion)
             {
                 UIMethod.DisplayQuitMessage();
             }
@@ -27,11 +30,11 @@ namespace QuizMaker
                 UIMethod.NumberOfQuestionMessage();
                 int numberOfQuizzerQuestions = int.Parse(Console.ReadLine());
 
-                int questionPosition = 0; int answerPosition = 0;
                 for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
                 {
+                    questionInputCounter++;
                     var EachQuestionInput = new QuestionandAnswer();
-                    EachQuestionInput.QuestionText = UIMethod.DisplayQuizzerInstruction();
+                    EachQuestionInput.QuestionText = UIMethod.DisplayQuizzerInstruction(questionInputCounter);
                     UIMethod.WriteEmptyLine();
 
                     int numberOfOptions = UIMethod.GiveNumberOfOptions();
@@ -58,43 +61,70 @@ namespace QuizMaker
                 {
                     writer.Serialize(file, QuestionList);
                 }
-                //To the user
-                Console.WriteLine($"There are {numberOfQuizzerQuestions} questions available");
 
                 using (FileStream file = File.OpenRead(path))
                 {
                     QuestionList = writer.Deserialize(file) as List<QuestionandAnswer>;
                 }
 
-                Console.WriteLine(QuestionList.Count);
-                Console.WriteLine(QuestionList.ToString);
-                
-                //var EachQuestionOutput = new QuestionandAnswer();
+                bool isValid = true;
+                if (isValid)
+                {
+                    while (continueAnsweringQuestion)
+                    {
+                        var randomQuestion = new Random();
+                        int indexOfRandomQuestion = randomQuestion.Next(QuestionList.Count);
+                        QuestionandAnswer randomlySelectedQuestion = QuestionList[indexOfRandomQuestion];
+                        
+                        UIMethod.DisplayUserInstruction();
+                        Console.WriteLine($"Question: {randomlySelectedQuestion.QuestionText}"); //create a method
+                        UIMethod.WriteEmptyLine();
+                        int optionCounter = Constant.COUNT_OPTION;
+                        foreach (var option in randomlySelectedQuestion.ListofQuestionandAnswers)
+                        {
+                            Console.WriteLine($"Option {optionCounter}: {option}"); //create a method
+                            optionCounter++;
+                        }
+                        UIMethod.WriteEmptyLine();
+                        Console.WriteLine("Type your answer below"); //create a method
+                        string userAnswer = UIMethod.TakeUserAnswer();
+                        totalAnswerCounter++;
+                        UIMethod.WriteEmptyLine();
+
+                        if (userAnswer != randomlySelectedQuestion.CorrectAnswerText)
+                        {
+                            UIMethod.LossMessage();
+                        }
+                        else
+                        {
+                            UIMethod.WinMessage();
+                            totalWinCounter++;
+                        }
+                        QuestionList.Remove(randomlySelectedQuestion);
+
+                        if (numberOfQuizzerQuestions < Constant.MINIMUM_NUMBER_OF_QUESTION || QuestionList.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
+                        {
+                            UIMethod.NoMoreQuestion();
+                            UIMethod.CalculateWinningScore(totalWinCounter, totalAnswerCounter);
+                            break;
+                        }
+                        else
+                        {
+                            continueAnsweringQuestion = UIMethod.AnswerAnotherQuestion();
+                            if (continueAnsweringQuestion)
+                            {
+                                isValid = true;
+                            }
+                            else
+                            {
+                                continueAnsweringQuestion = false;
+                                UIMethod.CalculateWinningScore(totalWinCounter, totalAnswerCounter);
+                                Environment.Exit(0);
+                            }
+                        }
+                    }
+                }
             }
-
-
-
-
-            //start again
-            UIMethod.DisplayUserInstruction();
-            //LogicMethod.UserQuestion(TheQuiz.QuestionText);
-            UIMethod.WriteEmptyLine();
-            //LogicMethod.UserAnswerOptions(TheQuiz.ListofQuestionandAnswers);
-            string userAnswer = UIMethod.TakeUserAnswer();
-            UIMethod.WriteEmptyLine();
-
-            //if (userAnswer != TheQuiz.CorrectAnswer)
-            //{
-            //    UIMethod.LossMessage();
-            //}
-            //else
-            //{
-            //    UIMethod.WinMessage();
-            //}
-
-
-
-
         }
     }
 }
