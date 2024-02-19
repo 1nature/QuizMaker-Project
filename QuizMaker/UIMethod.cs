@@ -6,8 +6,9 @@ namespace QuizMaker
     {
         public static void QuizWelcomeMessage()
         {
-            Console.WriteLine("Welcome!");
-            Console.WriteLine("You can use this program to ask questions from users\n");
+            Console.WriteLine("Welcome!\n");
+            Console.WriteLine("You can store your own questions to this quiz game");
+            Console.WriteLine("Also, you can answer stored questions in the quiz game\n");
         }
 
         public static void DisplayQuitMessage()
@@ -22,6 +23,20 @@ namespace QuizMaker
             return (makeQuizDecision == Constant.QUIZ_DECISION_YES);
         }
 
+        public static void ShowQuizGameInstruction()
+        {
+            Console.WriteLine("**************QUIZ INSTRUCTION*****************\n");
+            Console.WriteLine("If you want to store and answer questions, enter 'A'");
+            Console.WriteLine("If you want to store questions only, enter 'B'");
+            Console.WriteLine("If you want to answer questions only, enter 'C'\n");
+        }
+
+        public static char GetQuizLineResponse()
+        {
+            char quizLineChoice = Console.ReadKey().KeyChar;
+            return quizLineChoice;
+        }
+
         public static void WriteEmptyLine()
         {
             Console.WriteLine();
@@ -29,7 +44,7 @@ namespace QuizMaker
 
         public static void NumberOfQuestionMessage()
         {
-            Console.WriteLine("How many questions would you like to store?\n");
+            Console.WriteLine("How many questions would you like to store?");
         }
 
         public static void WinMessage()
@@ -48,7 +63,7 @@ namespace QuizMaker
         }
         public static string DisplayQuizzerInstruction(int questionInputTracker)
         {
-            Console.WriteLine($"Input the question number: {questionInputTracker}\n");
+            Console.WriteLine($"Store the question number: {questionInputTracker}\n");
             //Console.WriteLine("Input the question you would like to ask\n");
             string quizzerReply = Console.ReadLine();
             return quizzerReply;
