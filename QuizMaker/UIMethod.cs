@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic;
-
-namespace QuizMaker
+﻿namespace QuizMaker
 {
     public static class UIMethod
     {
@@ -21,6 +19,13 @@ namespace QuizMaker
             Console.WriteLine("Enter '1' to store question(s), or '0' to quit.\n");
             int makeQuizDecision = int.Parse(Console.ReadLine());
             return (makeQuizDecision == Constant.QUIZ_DECISION_YES);
+        }
+
+        public static bool RestartQuiz()
+        {
+            Console.WriteLine("Enter '1' to restart the quiz, or '0' to quit.\n");
+            int restart = int.Parse(Console.ReadLine());
+            return (restart == Constant.QUIZ_DECISION_YES);
         }
 
         public static void ShowQuizGameInstruction()
@@ -57,15 +62,15 @@ namespace QuizMaker
             Console.WriteLine("Incorrect answer. You have no score\n");
         }
 
-        public static void NoMoreQuestion()
+        public static void PrintNoMoreQuestionMessage()
         {
-            Console.WriteLine("There are no more questions left to answer. Thank you for your effort\n");
+            Console.WriteLine("There are no more questions left to answer\n");
         }
+
         public static string DisplayQuizzerInstruction(int questionInputTracker)
         {
-            Console.WriteLine($"Store the question number: {questionInputTracker}\n");
-            //Console.WriteLine("Input the question you would like to ask\n");
-            string quizzerReply = Console.ReadLine();
+            Console.WriteLine($"Input the question number: {questionInputTracker}\n");
+            string quizzerReply = Console.ReadLine().ToLower();
             return quizzerReply;
         }
 
@@ -99,13 +104,13 @@ namespace QuizMaker
 
         public static string AddTheOption()
         {
-            string theOption = Console.ReadLine();
+            string theOption = Console.ReadLine().ToLower();
             return theOption;
         }
 
         public static string AddCorrectOption()
         {
-            string correctOption = Console.ReadLine();
+            string correctOption = Console.ReadLine().ToLower();
             return correctOption;
         }
 
@@ -115,19 +120,39 @@ namespace QuizMaker
         }
 
 
-        public static void DisplayUserInstruction()
+        public static void DisplayUserInstruction(int availableQuestions)
         {
+            Console.WriteLine($"There are {availableQuestions} questions available for you to answer\n");
+            Console.WriteLine("You would see the questions and their answer options below");
             Console.WriteLine("Please select from the options shown to answer the question");
             Console.WriteLine("You should type in your answer\n");
         }
 
-
         public static string TakeUserAnswer()
         {
             UIMethod.WriteEmptyLine();
-            string theUserAnswer = Console.ReadLine();
+            string theUserAnswer = Console.ReadLine().ToLower();
             return theUserAnswer;
         }
 
+        public static void PrintRandomQuestion(List<string> listOfQuestions, int optionNumber)
+        {
+
+            foreach (var option in listOfQuestions)
+            {
+                Console.WriteLine($"Option {optionNumber}: {option}"); 
+                optionNumber++;
+            }
+        }
+
+        public static void PrintAnswerInputInstruction()
+        {
+            Console.WriteLine("Type your answer below");
+        }
+
+        public static void PrintQuestionToUser(int questionPosition, string mainQuestion)
+        {
+            Console.WriteLine($"Question {questionPosition}: {mainQuestion}");
+        }
     }
 }
