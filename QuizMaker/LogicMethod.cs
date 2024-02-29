@@ -1,4 +1,8 @@
-﻿namespace QuizMaker
+﻿using System.IO;
+using System.Xml.Serialization;
+using static QuizMaker.QnAClass;
+
+namespace QuizMaker
 {
     public static class LogicMethod
     {
@@ -58,5 +62,26 @@
                 optionInput.Add(theOption);
             }
         }
+
+        public static void SerializeData(string path, XmlSerializer xxxxxx, List<QuestionandAnswer> serialList)
+        {
+            using (FileStream file = File.Create(path))
+            {
+                xxxxxx.Serialize(file, serialList);
+            }
+        }
+
+        //public static void SerializeData(List<QuestionandAnswer> questionList, string path)
+        //{
+
+        //}
+
+        //public static void SerializeNow()
+        //{
+        //    using (FileStream file = File.Create(path))
+        //    {
+        //        writer.Serialize(file, QuestionList);
+        //    }
+        //}
     }
 }

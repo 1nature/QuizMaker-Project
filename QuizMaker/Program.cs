@@ -47,10 +47,10 @@ namespace QuizMaker
                             EachQuestionInput.QuestionText = UIMethod.DisplayQuizzerInstruction(questionInputCounter);
                             UIMethod.WriteEmptyLine();
 
-                            int numberOfOptions = UIMethod.GiveNumberOfOptions();
+                            int maximumOptions = UIMethod.GiveNumberOfOptions();
                             UIMethod.WriteEmptyLine();
                             UIMethod.ShowOptionsMessage();
-                            LogicMethod.TakeAnswerOption(numberOfOptions, quizAnswerOptions, EachQuestionInput.ListofQuestionandAnswers);
+                            LogicMethod.TakeAnswerOption(maximumOptions, quizAnswerOptions, EachQuestionInput.ListofQuestionandAnswers);
                                                         
                             UIMethod.WriteEmptyLine();
                             UIMethod.ShowCorrectAnswerInputMessage();
@@ -64,10 +64,16 @@ namespace QuizMaker
                             }
                         }
 
-                        using (FileStream file = File.Create(path))
-                        {
-                            writer.Serialize(file, QuestionList);
-                        }
+                        LogicMethod.SerializeData(path, writer, QuestionList);
+
+                        //var QuestionList = new List<QuestionandAnswer>();
+                        //XmlSerializer writer = new XmlSerializer(typeof(List<QuestionandAnswer>));
+                        //var path = @"QuestionList.xml";
+
+                        //using (FileStream file = File.Create(path))
+                        //{
+                        //    writer.Serialize(file, QuestionList);
+                        //}
                     }
 
                     Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); //for checks
