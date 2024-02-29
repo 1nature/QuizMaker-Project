@@ -94,6 +94,26 @@
         //    return valid;
         //}
 
+        public static int MaxUserQuestion()
+        {
+            bool valid = false;
+            int theNumber = 0;
+            while (valid == false)
+            {
+                UIMethod.NumberOfQuestionMessage();
+                string stringInput = Console.ReadLine();
+                if (int.TryParse(stringInput, out theNumber))
+                {
+                    valid = true;
+                }
+                else
+                {
+                    Console.WriteLine("Not a valid input, please try again");
+                }
+            }
+            return theNumber;
+        }
+
         public static int GiveNumberOfOptions()
         {
             bool valid = false;
