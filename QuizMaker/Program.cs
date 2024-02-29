@@ -62,16 +62,7 @@ namespace QuizMaker
                             }
                         }
 
-                        LogicMethod.SerializeData(path, writer, QuestionList);
-
-                        //var QuestionList = new List<QuestionandAnswer>();
-                        //XmlSerializer writer = new XmlSerializer(typeof(List<QuestionandAnswer>));
-                        //var path = @"QuestionList.xml";
-
-                        //using (FileStream file = File.Create(path))
-                        //{
-                        //    writer.Serialize(file, QuestionList);
-                        //}
+                        LogicMethod.SerializeData(path, writer, QuestionList);                        
                     }
 
                     Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); //for checks
