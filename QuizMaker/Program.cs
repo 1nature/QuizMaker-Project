@@ -71,11 +71,7 @@ namespace QuizMaker
                     {
                         if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
                         {
-                            using (FileStream file = File.OpenRead(path))
-                            {
-                                QuestionList = writer.Deserialize(file) as List<QuestionandAnswer>;
-                            }
-
+                            LogicMethod.ReadQuizFromXml(path, QuestionList, writer);
                             UIMethod.DisplayUserInstruction(QuestionList.Count);
 
                             bool answerMoreQuestion = true;

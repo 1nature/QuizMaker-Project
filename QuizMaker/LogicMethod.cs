@@ -69,5 +69,13 @@ namespace QuizMaker
                 variable.Serialize(file, serialList);
             }
         }
+
+        public static void ReadQuizFromXml(string thePath, List<QuestionandAnswer> storedList, XmlSerializer theVariable)
+        {
+            using (FileStream file = File.OpenRead(thePath))
+            {
+                storedList = theVariable.Deserialize(file) as List<QuestionandAnswer>;
+            }
+        }
     }
 }
