@@ -74,26 +74,7 @@
             return quizzerReply;
         }
 
-        //public static bool ValidateInput()
-        //{
-        //    bool valid = false;
-        //    int number;
-        //    while (valid == false)
-        //    {
-        //        Console.WriteLine("Input the number of options to your question?\n");
-        //        string theInput = Console.ReadLine();
-        //        if (int.TryParse(theInput, out number))
-        //        {
-        //            valid = true;
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("Not a valid input, please try again");
-        //        }
-        //    }
-        //    return valid;
-        //}
-
+        
         public static int MaxUserQuestion()
         {
             bool valid = false;
@@ -133,20 +114,7 @@
             }
             return number;
         }
-        //Console.WriteLine("Input the number of options to your question?\n");
-        //int numberOfOptions = int.Parse(Console.ReadLine());
-        //return numberOfOptions;
-        //return number;
-    
-
-        //public static int GiveNumberOfOptions()
-        //{
-        //    Console.WriteLine("Input the number of options to your question?\n");
-        //    //int numberOfOptions = int.Parse(Console.ReadLine());
-        //    //return numberOfOptions;
-        //    return number;
-        //}
-
+        
         public static void ShowOptionsMessage()
         {
             Console.WriteLine("Input your options one after the other. One of them must be the correct answer\n");

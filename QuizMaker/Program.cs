@@ -8,15 +8,9 @@ namespace QuizMaker
         static void Main(string[] args)
         {
             bool continueStoringQuestion = true;
-            bool answerMoreQuestion = true;
-            bool keepPlayingQuiz = true;
-            int totalWinCounter = 0;
-            int totalAnswerCounter = 0;
-            int questionInputCounter = 0;
+            bool keepPlayingQuiz = true;            
             int numberOfQuizzerQuestions = 0;
-            int noCount = 0;
             char quizSelection;
-            string quizAnswerOptions = "";
 
             UIMethod.QuizWelcomeMessage();
             UIMethod.WriteEmptyLine();
@@ -32,6 +26,8 @@ namespace QuizMaker
                 UIMethod.ShowQuizGameInstruction();
                 quizSelection = UIMethod.GetQuizLineResponse();
                 UIMethod.WriteEmptyLine();
+                int questionInputCounter = 0;
+                string quizAnswerOptions = "";
 
                 while (keepPlayingQuiz)
                 {
@@ -49,7 +45,7 @@ namespace QuizMaker
                             UIMethod.WriteEmptyLine();
                             UIMethod.ShowOptionsMessage();
                             LogicMethod.TakeAnswerOption(maximumOptions, quizAnswerOptions, EachQuestionInput.ListofQuestionandAnswers);
-                                                        
+
                             UIMethod.WriteEmptyLine();
                             UIMethod.ShowCorrectAnswerInputMessage();
                             EachQuestionInput.CorrectAnswerText = UIMethod.AddCorrectOption();
@@ -62,12 +58,15 @@ namespace QuizMaker
                             }
                         }
 
-                        LogicMethod.SerializeData(path, writer, QuestionList);                        
+                        LogicMethod.SerializeData(path, writer, QuestionList);
                     }
 
                     Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); //for checks
 
                     bool isValid = true;
+                    int totalWinCounter = 0;
+                    int totalAnswerCounter = 0;
+
                     if (isValid)
                     {
                         if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
@@ -79,6 +78,7 @@ namespace QuizMaker
 
                             UIMethod.DisplayUserInstruction(QuestionList.Count);
 
+                            bool answerMoreQuestion = true;
                             while (answerMoreQuestion)
                             {
                                 questionInputCounter++;
@@ -91,11 +91,11 @@ namespace QuizMaker
                                     var randomQuestion = new Random();
                                     int indexOfRandomQuestion = randomQuestion.Next(QuestionList.Count);
                                     QuestionandAnswer randomlySelectedQuestion = QuestionList[indexOfRandomQuestion];
-                                    UIMethod.PrintQuestionToUser(questionInputCounter, randomlySelectedQuestion.QuestionText);                                  
+                                    UIMethod.PrintQuestionToUser(questionInputCounter, randomlySelectedQuestion.QuestionText);
                                     UIMethod.WriteEmptyLine();
                                     int optionCounter = Constant.COUNT_OPTION;
 
-                                    UIMethod.PrintRandomQuestion(randomlySelectedQuestion.ListofQuestionandAnswers, optionCounter);                                   
+                                    UIMethod.PrintRandomQuestion(randomlySelectedQuestion.ListofQuestionandAnswers, optionCounter);
                                     UIMethod.WriteEmptyLine();
                                     UIMethod.PrintAnswerInputInstruction();
                                     string userAnswer = UIMethod.TakeUserAnswer();
@@ -106,13 +106,14 @@ namespace QuizMaker
 
                                     if (QuestionList.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
                                     {
+                                        int noCount = 0;
                                         questionInputCounter = noCount;
                                         break;
                                     }
                                     else
                                     {
                                         bool moreQuestion = UIMethod.AnswerAnotherQuestion();
-                                        LogicMethod.QuestionAnswerProxy(moreQuestion, answerMoreQuestion, totalWinCounter, totalAnswerCounter);                                      
+                                        LogicMethod.QuestionAnswerProxy(moreQuestion, answerMoreQuestion, totalWinCounter, totalAnswerCounter);
                                     }
                                 }
                             }
