@@ -11,13 +11,13 @@ namespace QuizMaker
             bool keepPlayingQuiz = true;            
             int numberOfQuizzerQuestions = 0;
             char quizSelection;
+            var randomQ = new Random();
 
             UIMethod.QuizWelcomeMessage();
             UIMethod.WriteEmptyLine();
 
             var QuestionList = new List<QuestionandAnswer>();
-            XmlSerializer writer = new XmlSerializer(typeof(List<QuestionandAnswer>));
-            var path = @"QuestionList.xml";
+            
 
             continueStoringQuestion = UIMethod.StoreQuestion();
             if (continueStoringQuestion)
@@ -58,7 +58,8 @@ namespace QuizMaker
                             }
                         }
 
-                        LogicMethod.SerializeData(path, writer, QuestionList);
+                        LogicMethod.SerializeData(QuestionList);
+                        //LogicMethod.SerializeData(path, writer, QuestionList);
                     }
 
                     Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); //for checks
@@ -71,7 +72,7 @@ namespace QuizMaker
                     {
                         if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
                         {
-                            LogicMethod.ReadQuizFromXml(path, QuestionList, writer);
+                            LogicMethod.ReadQuizFromXml(QuestionList);
                             UIMethod.DisplayUserInstruction(QuestionList.Count);
 
                             bool answerMoreQuestion = true;
@@ -87,6 +88,7 @@ namespace QuizMaker
                                     var randomQuestion = new Random();
                                     int indexOfRandomQuestion = randomQuestion.Next(QuestionList.Count);
                                     QuestionandAnswer randomlySelectedQuestion = QuestionList[indexOfRandomQuestion];
+                                    
                                     UIMethod.PrintQuestionToUser(questionInputCounter, randomlySelectedQuestion.QuestionText);
                                     UIMethod.WriteEmptyLine();
                                     int optionCounter = Constant.COUNT_OPTION;
