@@ -33,7 +33,7 @@ namespace QuizMaker
                 {
                     if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_STOREONLY)
                     {
-                        numberOfQuizzerQuestions = UIMethod.MaxUserQuestion();
+                        numberOfQuizzerQuestions = UIMethod.ReadMaxUserQuestion();
                         for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
                         {
                             questionInputCounter++;

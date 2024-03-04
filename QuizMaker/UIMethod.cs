@@ -75,7 +75,7 @@
         }
 
         
-        public static int MaxUserQuestion()
+        public static int ReadMaxUserQuestion()
         {
             bool valid = false;
             int theNumber = 0;
