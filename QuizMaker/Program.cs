@@ -7,16 +7,16 @@ namespace QuizMaker
         static void Main(string[] args)
         {
             bool continueStoringQuestion = true;
-            bool keepPlayingQuiz = true;            
+            bool keepPlayingQuiz = true;
             int numberOfQuizzerQuestions = 0;
             char quizSelection;
-            var randomQ = new Random();
+            var randomQuestion = new Random();
 
             UIMethod.QuizWelcomeMessage();
             UIMethod.WriteEmptyLine();
 
             var QuestionList = new List<QuestionandAnswer>();
-            
+
 
             continueStoringQuestion = UIMethod.StoreQuestion();
             if (continueStoringQuestion)
@@ -36,7 +36,6 @@ namespace QuizMaker
                         //QuestionList.Add(newQna);
 
                         numberOfQuizzerQuestions = UIMethod.GetIntFromUser("Number of question please:");
-                        //numberOfQuizzerQuestions = UIMethod.GetIntFromUser("Number of question please:"); //SOMETHING CHANGED HERE
                         for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
                         {
                             questionInputCounter++;
@@ -44,7 +43,7 @@ namespace QuizMaker
                             EachQuestionInput.QuestionText = UIMethod.DisplayQuizzerInstruction(questionInputCounter);
                             UIMethod.WriteEmptyLine();
 
-                            int maximumOptions = UIMethod.GetIntFromUser("Input the number of options to your question?\n"); //UIMethod.GiveNumberOfOptions();
+                            int maximumOptions = UIMethod.GetIntFromUser("Input the number of options to your question?\n");
                             UIMethod.WriteEmptyLine();
                             UIMethod.ShowOptionsMessage();
                             LogicMethod.TakeAnswerOption(maximumOptions, quizAnswerOptions, EachQuestionInput.ListofQuestionandAnswers);
@@ -90,18 +89,12 @@ namespace QuizMaker
                                 {
                                     //Random rnd = new Random();
                                     //
-                                    var randomQuestion = new Random();//OUTSIDE THE LOOP
-                                    int indexOfRandomQuestion = randomQuestion.Next(QuestionList.Count);
-                                    QuestionandAnswer randomlySelectedQuestion = QuestionList[indexOfRandomQuestion];
-                                    //TOP OBJECT
+                                    //var randomQuestion = new Random();//OUTSIDE THE LOOP
+                                    //int indexOfRandomQuestion = randomQuestion.Next(QuestionList.Count);
+                                    //QuestionandAnswer randomlySelectedQuestion = QuestionList[indexOfRandomQuestion];
+                                    ////TOP OBJECT
 
-                                    //QuestionandAnswer randomlySelectedQuestion = LogicMethod.FetchRandomQuestion(randomQuestion, QuestionList);
-                                    //QuestionandAnswer xRandy;
-                                    //QuestionandAnswer randomlySelectedQuestionx = LogicMethod.FetchRandomQuestion(QuestionList, rnd);
-
-                                    //Do I still need to declare random in the main code?
-
-
+                                    QuestionandAnswer randomlySelectedQuestion = LogicMethod.FetchRandomQuestion(QuestionList, randomQuestion);
                                     UIMethod.PrintQuestionToUser(questionInputCounter, randomlySelectedQuestion.QuestionText);
                                     UIMethod.WriteEmptyLine();
                                     int optionCounter = Constant.COUNT_OPTION;

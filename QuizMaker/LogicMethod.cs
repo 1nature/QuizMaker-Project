@@ -12,13 +12,14 @@ namespace QuizMaker
             return theWriter;
         }
 
-        public static object FetchRandomQuestion(List<QuestionandAnswer> randomQuestionList, QuestionandAnswer randomQuestion)
+        public static QuestionandAnswer FetchRandomQuestion(List<QuestionandAnswer> randomQuestionList, Random randomQuest)
         {
-            
+
             //Random randomQuestion = new Random();
-            //int indexOfRandomQuestion = randomQuestion.Next(randomQuestionList.Count);
-            //QuestionandAnswer answerX = randomQuestionList[indexOfRandomQuestion];
-            return randomQuestion;
+            int indexOfRandomQuest = randomQuest.Next(randomQuestionList.Count);
+            //QuestionandAnswer answerX = randomQuestionList[indexOfRandomQuest];
+            QuestionandAnswer answerX = randomQuestionList[indexOfRandomQuest];
+            return answerX;
 
             //At what point do I declare random?
 
