@@ -35,7 +35,7 @@ namespace QuizMaker
                         //QuestionandAnswer newQna = UIMethod.GetQuestionandAnswerObjectFromUser();
                         //QuestionList.Add(newQna);
 
-                        numberOfQuizzerQuestions = UIMethod.GetIntFromUser("Number of question please:");
+                        numberOfQuizzerQuestions = UIMethod.GetIntFromUser("Input the number of questions you want to store:");
                         for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
                         {
                             questionInputCounter++;

@@ -40,7 +40,16 @@ namespace QuizMaker
 
         public static char GetQuizLineResponse()
         {
-            char quizLineChoice = Console.ReadKey().KeyChar;
+            char quizLineChoice;
+            do
+            {
+                quizLineChoice = char.Parse(Console.ReadLine());
+                quizLineChoice = char.ToUpper(quizLineChoice);
+
+                if (quizLineChoice != 'A' && quizLineChoice != 'B' && quizLineChoice != 'C')
+                    Console.WriteLine("Not a valid input. Please try again");
+
+            } while (quizLineChoice != 'A' && quizLineChoice != 'B' && quizLineChoice != 'C');
             return quizLineChoice;
         }
 
@@ -100,7 +109,7 @@ namespace QuizMaker
         public static QuestionandAnswer GetQuestionandAnswerObjectFromUser()
         {
             QuestionandAnswer returnValue = new();
-           int  numberOfQuizzerQuestions = UIMethod.GetIntFromUser("Number of question please:");
+            int numberOfQuizzerQuestions = UIMethod.GetIntFromUser("Number of question please:");
 
 
             return returnValue;
@@ -155,28 +164,28 @@ namespace QuizMaker
         //    return number;
         //}
 
-        public static int ValidateInputReply(string theInputVariable)
-        {
-            bool valid = false;
-            int tempNum;
-            //return int.TryParse(theInputVariable, out tempNum);
-            bool xRay = int.TryParse(theInputVariable, out tempNum);
+        //public static int ValidateInputReply(string theInputVariable)
+        //{
+        //    bool valid = false;
+        //    int tempNum;
+        //    //return int.TryParse(theInputVariable, out tempNum);
+        //    bool xRay = int.TryParse(theInputVariable, out tempNum);
 
-            while (valid == false)
-            {
-                if (xRay == true)
-                {
-                    valid = true;
-                }
-                else
-                {
-                    xRay = false;
-                    Console.WriteLine("Repeat please");
-                    //break;
-                }
-            }
-            return tempNum;
-        }
+        //    while (valid == false)
+        //    {
+        //        if (xRay == true)
+        //        {
+        //            valid = true;
+        //        }
+        //        else
+        //        {
+        //            xRay = false;
+        //            Console.WriteLine("Repeat please");
+        //            //break;
+        //        }
+        //    }
+        //    return tempNum;
+        //}
 
         //public static int ValidateInputReply(string theInputVariable, bool isReply)
         //{
