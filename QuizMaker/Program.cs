@@ -126,14 +126,17 @@ namespace QuizMaker
 
                     UIMethod.PrintNoMoreQuestionMessage();
                     keepPlayingQuiz = UIMethod.RestartQuiz();
-                    LogicMethod.RepeatPlay(keepPlayingQuiz, quizSelection, totalWinCounter, totalAnswerCounter);
+                    LogicMethod.RepeatPlay(keepPlayingQuiz, quizSelection, totalWinCounter, totalAnswerCounter);                 
                 }
             }
             else
             {
                 continueStoringQuestion = false;
-                UIMethod.DisplayQuitMessage();
-                Environment.Exit(0);
+                while (!continueStoringQuestion)
+                {
+                    UIMethod.DisplayQuitMessage();
+                    break;
+                }
             }
         }
     }
