@@ -12,6 +12,38 @@ namespace QuizMaker
             return theWriter;
         }
 
+        public static object FetchRandomQuestion(List<QuestionandAnswer> randomQuestionList, QuestionandAnswer randomQuestion)
+        {
+            
+            //Random randomQuestion = new Random();
+            //int indexOfRandomQuestion = randomQuestion.Next(randomQuestionList.Count);
+            //QuestionandAnswer answerX = randomQuestionList[indexOfRandomQuestion];
+            return randomQuestion;
+
+            //At what point do I declare random?
+
+            //var random = new Random();
+            //var list = new List<string> { "one", "two", "three", "four" };
+            //int index = random.Next(list.Count);
+
+            //var theRandomQuestion = new Random();
+            //selectedQuestion = new Random();
+            //int indexOftheRandomQuestion = theRandomQuestion.Next(randomQuestionList.Count);
+            //int indexOftheRandomQuestion = selectedQuestion.Next(randomQuestionList.Count);
+            //QuestionandAnswer theselectedQuestion = randomQuestionList[indexOftheRandomQuestion];
+            //QuestionandAnswer selectedQuestion = randomQuestionList[indexOftheRandomQuestion];
+            //selectedQuestion = randomQuestionList[indexOftheRandomQuestion];
+            //return randomQuestionList[indexOftheRandomQuestion];
+
+            //return randomQuestionList[indexOftheRandomQuestion];
+            //return selectedQuestion;
+            //var randomQuestion = new Random();//OUTSIDE THE LOOP
+            //int indexOfRandomQuestion = randomQuestion.Next(QuestionList.Count);
+            //QuestionandAnswer randomlySelectedQuestion = QuestionList[indexOfRandomQuestion];
+            //return indexOftheRandomQuestion;
+            //return selectedQuestion;
+        }
+
         public static void UserQuestion(string newQuestion)
         {
             Console.WriteLine(newQuestion);
