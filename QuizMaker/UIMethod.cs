@@ -57,12 +57,7 @@ namespace QuizMaker
         {
             Console.WriteLine();
         }
-
-        public static void NumberOfQuestionMessage()
-        {
-            Console.WriteLine("How many questions would you like to store?");
-        }
-
+                
         public static void WinMessage()
         {
             Console.WriteLine("Correct answer. You have a score\n");

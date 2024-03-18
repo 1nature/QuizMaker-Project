@@ -16,6 +16,7 @@ namespace QuizMaker
             UIMethod.WriteEmptyLine();
 
             var QuestionList = new List<QuestionandAnswer>();
+            var DeserialisedList = new List<QuestionandAnswer>();
 
 
             continueStoringQuestion = UIMethod.StoreQuestion();
@@ -59,9 +60,7 @@ namespace QuizMaker
                                 break;
                             }
                         }
-
                         LogicMethod.SerializeData(QuestionList);
-                        //LogicMethod.SerializeData(path, writer, QuestionList);
                     }
 
                     Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); //for checks
@@ -74,27 +73,20 @@ namespace QuizMaker
                     {
                         if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
                         {
-                            LogicMethod.ReadQuizFromXml(QuestionList);
-                            UIMethod.DisplayUserInstruction(QuestionList.Count);
+                            DeserialisedList = LogicMethod.ReadQuizFromXml();
+                            UIMethod.DisplayUserInstruction(DeserialisedList.Count);
 
                             bool answerMoreQuestion = true;
                             while (answerMoreQuestion)
                             {
                                 questionInputCounter++;
-                                if (QuestionList.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
+                                if (DeserialisedList.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
                                 {
                                     UIMethod.PrintNoMoreQuestionMessage();
                                 }
                                 else
                                 {
-                                    //Random rnd = new Random();
-                                    //
-                                    //var randomQuestion = new Random();//OUTSIDE THE LOOP
-                                    //int indexOfRandomQuestion = randomQuestion.Next(QuestionList.Count);
-                                    //QuestionandAnswer randomlySelectedQuestion = QuestionList[indexOfRandomQuestion];
-                                    ////TOP OBJECT
-
-                                    QuestionandAnswer randomlySelectedQuestion = LogicMethod.FetchRandomQuestion(QuestionList, randomQuestion);
+                                    QuestionandAnswer randomlySelectedQuestion = LogicMethod.FetchRandomQuestion(DeserialisedList, randomQuestion);
                                     UIMethod.PrintQuestionToUser(questionInputCounter, randomlySelectedQuestion.QuestionText);
                                     UIMethod.WriteEmptyLine();
                                     int optionCounter = Constant.COUNT_OPTION;
@@ -106,9 +98,9 @@ namespace QuizMaker
                                     totalAnswerCounter++;
                                     UIMethod.WriteEmptyLine();
                                     LogicMethod.CheckCorrectAnswer(userAnswer, randomlySelectedQuestion.CorrectAnswerText, totalWinCounter);
-                                    QuestionList.Remove(randomlySelectedQuestion);
+                                    DeserialisedList.Remove(randomlySelectedQuestion);
 
-                                    if (QuestionList.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
+                                    if (DeserialisedList.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
                                     {
                                         int noCount = 0;
                                         questionInputCounter = noCount;
@@ -126,7 +118,7 @@ namespace QuizMaker
 
                     UIMethod.PrintNoMoreQuestionMessage();
                     keepPlayingQuiz = UIMethod.RestartQuiz();
-                    LogicMethod.RepeatPlay(keepPlayingQuiz, quizSelection, totalWinCounter, totalAnswerCounter);                 
+                    LogicMethod.RepeatPlay(keepPlayingQuiz, quizSelection, totalWinCounter, totalAnswerCounter);
                 }
             }
             else
