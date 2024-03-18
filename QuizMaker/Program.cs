@@ -27,6 +27,7 @@ namespace QuizMaker
                 quizSelection = UIMethod.GetQuizLineResponse();
                 UIMethod.WriteEmptyLine();
                 int questionInputCounter = 0;
+                int storePlusAnswerCounter = 0;
                 string quizAnswerOptions = "";
 
                 while (keepPlayingQuiz)
@@ -37,12 +38,15 @@ namespace QuizMaker
                         //QuestionList.Add(newQna);
 
                         numberOfQuizzerQuestions = UIMethod.GetIntFromUser("Input the number of questions you want to store:");
+                        int someCountDown = numberOfQuizzerQuestions;
                         for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
                         {
                             questionInputCounter++;
+                            //int someCountDown = numberOfQuizzerQuestions;
                             var EachQuestionInput = new QuestionandAnswer();
                             EachQuestionInput.QuestionText = UIMethod.DisplayQuizzerInstruction(questionInputCounter);
                             UIMethod.WriteEmptyLine();
+                            someCountDown--;
 
                             int maximumOptions = UIMethod.GetIntFromUser("Input the number of options to your question?\n");
                             UIMethod.WriteEmptyLine();
@@ -55,11 +59,13 @@ namespace QuizMaker
                             UIMethod.WriteEmptyLine();
                             QuestionList.Add(EachQuestionInput);
 
-                            if (quizSelection == Constant.QUIZ_TYPE_STOREONLY && numberOfQuizzerQuestions < Constant.MINIMUM_NUMBER_OF_QUESTION)
+                            if (quizSelection == Constant.QUIZ_TYPE_STOREONLY && someCountDown < Constant.MINIMUM_NUMBER_OF_QUESTION)
                             {
+                                Console.WriteLine("You have stored your questions");
                                 break;
+                                //should have restart opportunity here
                             }
-                        }
+                        }                        
                         LogicMethod.SerializeData(QuestionList);
                     }
 
@@ -79,7 +85,8 @@ namespace QuizMaker
                             bool answerMoreQuestion = true;
                             while (answerMoreQuestion)
                             {
-                                questionInputCounter++;
+                                //questionInputCounter++;
+                                storePlusAnswerCounter++;
                                 if (DeserialisedList.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
                                 {
                                     UIMethod.PrintNoMoreQuestionMessage();
@@ -87,7 +94,8 @@ namespace QuizMaker
                                 else
                                 {
                                     QuestionandAnswer randomlySelectedQuestion = LogicMethod.FetchRandomQuestion(DeserialisedList, randomQuestion);
-                                    UIMethod.PrintQuestionToUser(questionInputCounter, randomlySelectedQuestion.QuestionText);
+                                    //UIMethod.PrintQuestionToUser(questionInputCounter, randomlySelectedQuestion.QuestionText);
+                                    UIMethod.PrintQuestionToUser(storePlusAnswerCounter, randomlySelectedQuestion.QuestionText);
                                     UIMethod.WriteEmptyLine();
                                     int optionCounter = Constant.COUNT_OPTION;
 
@@ -127,7 +135,7 @@ namespace QuizMaker
 
                     UIMethod.PrintNoMoreQuestionMessage();
                     keepPlayingQuiz = UIMethod.RestartQuiz();
-                    LogicMethod.RepeatPlay(keepPlayingQuiz, quizSelection, totalWinCounter, totalAnswerCounter);
+                    UIMethod.RepeatPlay(keepPlayingQuiz, quizSelection, totalWinCounter, totalAnswerCounter);
                 }
             }
             else

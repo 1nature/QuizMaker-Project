@@ -211,5 +211,22 @@ namespace QuizMaker
         {
             Console.WriteLine($"Question {questionPosition}: {mainQuestion}");
         }
+
+        public static void RepeatPlay(bool keepPlayingProxy, char quizSelectionProxy, int winProxy, int answerProxy)
+        {
+            if (keepPlayingProxy)
+            {
+                ShowQuizGameInstruction();
+                quizSelectionProxy = GetQuizLineResponse();
+                WriteEmptyLine();
+            }
+            else
+            {
+                keepPlayingProxy = false;
+                DisplayQuitMessage();
+                CalculateWinningScore(winProxy, answerProxy);
+            }
+        }
+
     }
 }

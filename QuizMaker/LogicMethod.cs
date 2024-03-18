@@ -36,22 +36,6 @@ namespace QuizMaker
             }
         }
 
-        public static void RepeatPlay(bool keepPlayingProxy, char quizSelectionProxy, int winProxy, int answerProxy)
-        {
-            if (keepPlayingProxy)
-            {
-                UIMethod.ShowQuizGameInstruction();
-                quizSelectionProxy = UIMethod.GetQuizLineResponse();
-                UIMethod.WriteEmptyLine();
-            }
-            else
-            {
-                keepPlayingProxy = false;
-                UIMethod.DisplayQuitMessage();
-                UIMethod.CalculateWinningScore(winProxy, answerProxy);
-            }
-        }
-
         public static int CheckCorrectAnswer(string theAnswer, string correctAnswer)
         {
             int totalCounter = 0;
