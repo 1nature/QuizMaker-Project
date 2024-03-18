@@ -97,7 +97,10 @@ namespace QuizMaker
                                     string userAnswer = UIMethod.TakeUserAnswer();
                                     totalAnswerCounter++;
                                     UIMethod.WriteEmptyLine();
-                                    LogicMethod.CheckCorrectAnswer(userAnswer, randomlySelectedQuestion.CorrectAnswerText, totalWinCounter);
+                                    //LogicMethod.CheckCorrectAnswer(userAnswer, randomlySelectedQuestion.CorrectAnswerText, totalWinCounter);
+                                    int xtotalWinCounter = LogicMethod.CheckCorrectAnswer(userAnswer, randomlySelectedQuestion.CorrectAnswerText);
+                                    //int xtotalWinCounter = 0;
+                                    //xtotalWinCounter++;
                                     DeserialisedList.Remove(randomlySelectedQuestion);
 
                                     if (DeserialisedList.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
@@ -106,11 +109,17 @@ namespace QuizMaker
                                         questionInputCounter = noCount;
                                         break;
                                     }
-                                    else
-                                    {
-                                        bool moreQuestion = UIMethod.AnswerAnotherQuestion();
-                                        LogicMethod.QuestionAnswerProxy(moreQuestion, answerMoreQuestion, totalWinCounter, totalAnswerCounter);
-                                    }
+
+                                    bool moreQuestion = UIMethod.AnswerAnotherQuestion();
+                                    UIMethod.XCalculateWinningScore(moreQuestion, answerMoreQuestion, xtotalWinCounter, totalAnswerCounter);
+
+
+                                    //else
+                                    //{
+                                    //    bool moreQuestion = UIMethod.AnswerAnotherQuestion();
+                                    //    UIMethod.XCalculateWinningScore(moreQuestion, answerMoreQuestion, xtotalWinCounter, totalAnswerCounter);
+                                    //    //LogicMethod.QuestionAnswerProxy(moreQuestion, answerMoreQuestion, totalWinCounter, totalAnswerCounter);
+                                    //}
                                 }
                             }
                         }

@@ -57,7 +57,7 @@ namespace QuizMaker
         {
             Console.WriteLine();
         }
-                
+
         public static void WinMessage()
         {
             Console.WriteLine("Correct answer. You have a score\n");
@@ -107,7 +107,7 @@ namespace QuizMaker
             int numberOfQuizzerQuestions = GetIntFromUser("Number of question please:");
             return returnValue;
         }
-                
+
         public static void ShowOptionsMessage()
         {
             Console.WriteLine("Input your options one after the other. One of them must be the correct answer\n");
@@ -126,6 +126,37 @@ namespace QuizMaker
             Console.WriteLine("***********YOUR FINAL SCORE**************");
             int result = (currentScore / maxScore) * 100;
             Console.WriteLine($"You scored {currentScore} question(s) out of {maxScore} OR {result}%");
+        }
+
+        public static void XCalculateWinningScore(bool questionProxy, bool answerProxy, int currentScore, int maxScore)
+        {
+            int result;
+
+            if (questionProxy)
+            {
+                answerProxy = true;
+            }
+            else
+            {
+                answerProxy = false;
+                Console.WriteLine("***********YOUR FINAL SCORE**************");
+                result = (currentScore / maxScore) * 100;
+                Console.WriteLine($"You scored {currentScore} question(s) out of {maxScore} OR {result}%");
+                //UIMethod.CalculateWinningScore(winProxyCounter, answerProxyCounter);
+            }
+        }
+
+        public static void QuestionAnswerProxy(bool questionProxy, bool answerProxy, int winProxyCounter, int answerProxyCounter)
+        {
+            if (questionProxy)
+            {
+                answerProxy = true;
+            }
+            else
+            {
+                answerProxy = false;
+                UIMethod.CalculateWinningScore(winProxyCounter, answerProxyCounter);
+            }
         }
 
         public static string AddTheOption()

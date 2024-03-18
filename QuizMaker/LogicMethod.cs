@@ -52,17 +52,19 @@ namespace QuizMaker
             }
         }
 
-        public static void CheckCorrectAnswer(string theAnswer, string correctAnswer, int totalCounter)
+        public static int CheckCorrectAnswer(string theAnswer, string correctAnswer)
         {
+            int totalCounter = 0;
             if (theAnswer != correctAnswer)
             {
                 UIMethod.LossMessage();
             }
             else
             {
-                UIMethod.WinMessage();
                 totalCounter++;
+                UIMethod.WinMessage();
             }
+            return totalCounter;
         }
 
         public static void TakeAnswerOption(int optionTotal, string theOption, List<string> optionInput)
@@ -76,7 +78,7 @@ namespace QuizMaker
 
         public static void SerializeData(List<QuestionandAnswer> serialList)
         {
-            XmlSerializer writer = DeclareXmlProperty();           
+            XmlSerializer writer = DeclareXmlProperty();
             using (FileStream file = File.Create(Constant.THE_XML_PATH))
             {
                 writer.Serialize(file, serialList);
@@ -93,6 +95,6 @@ namespace QuizMaker
                 storedList = theVariable.Deserialize(file) as List<QuestionandAnswer>;
             }
             return storedList;
-        }      
+        }
     }
 }
