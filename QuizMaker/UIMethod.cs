@@ -121,16 +121,18 @@ namespace QuizMaker
             return (newQuestion == Constant.QUIZ_DECISION_YES);
         }
 
-        public static void CalculateWinningScore(int currentScore, int maxScore)
+        public static void CalculateWinningScoreOnly(int currentScore, int maxScore)//int as example
         {
-            Console.WriteLine("***********YOUR FINAL SCORE**************");
-            int result = (currentScore / maxScore) * 100;
-            Console.WriteLine($"You scored {currentScore} question(s) out of {maxScore} OR {result}%");
+            Console.WriteLine("***********YOUR SCORE**************");
+            //int theResult = (currentScore / maxScore) * 100;
+            decimal theResult = (decimal)currentScore / maxScore * 100;
+            Console.WriteLine($"You scored {currentScore} question(s) out of {maxScore} OR {theResult}%\n");
+            //return theResult;
         }
 
-        public static void XCalculateWinningScore(bool questionProxy, bool answerProxy, int currentScore, int maxScore)
+        public static void CalculateWinningScore(bool questionProxy, bool answerProxy, int currentScore, int maxScore)
         {
-            int result;
+            int result = 0;
 
             if (questionProxy)
             {
@@ -139,25 +141,26 @@ namespace QuizMaker
             else
             {
                 answerProxy = false;
-                Console.WriteLine("***********YOUR FINAL SCORE**************");
-                result = (currentScore / maxScore) * 100;
-                Console.WriteLine($"You scored {currentScore} question(s) out of {maxScore} OR {result}%");
+                CalculateWinningScoreOnly(currentScore, maxScore);
+                //Console.WriteLine("***********YOUR FINAL SCORE**************");
+                //result = currentScore / maxScore * 100;
+                //Console.WriteLine($"You scored {currentScore} question(s) out of {maxScore} OR {result}%");
                 //UIMethod.CalculateWinningScore(winProxyCounter, answerProxyCounter);
             }
         }
 
-        public static void QuestionAnswerProxy(bool questionProxy, bool answerProxy, int winProxyCounter, int answerProxyCounter)
-        {
-            if (questionProxy)
-            {
-                answerProxy = true;
-            }
-            else
-            {
-                answerProxy = false;
-                UIMethod.CalculateWinningScore(winProxyCounter, answerProxyCounter);
-            }
-        }
+        //public static void QuestionAnswerProxy(bool questionProxy, bool answerProxy, int winProxyCounter, int answerProxyCounter)
+        //{
+        //    if (questionProxy)
+        //    {
+        //        answerProxy = true;
+        //    }
+        //    else
+        //    {
+        //        answerProxy = false;
+        //        UIMethod.CalculateWinningScore(winProxyCounter, answerProxyCounter);
+        //    }
+        //}
 
         public static string AddTheOption()
         {
@@ -224,7 +227,7 @@ namespace QuizMaker
             {
                 keepPlayingProxy = false;
                 DisplayQuitMessage();
-                CalculateWinningScore(winProxy, answerProxy);
+                //CalculateWinningScoreOnly(winProxy, answerProxy); //Instead of this method, I could do the coding in the RepeatPlay method?
             }
         }
 

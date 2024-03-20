@@ -23,20 +23,20 @@ namespace QuizMaker
             Console.WriteLine(newQuestion);
         }
 
-        public static void QuestionAnswerProxy(bool questionProxy, bool answerProxy, int winProxyCounter, int answerProxyCounter)
-        {
-            if (questionProxy)
-            {
-                answerProxy = true;
-            }
-            else
-            {
-                answerProxy = false;
-                UIMethod.CalculateWinningScore(winProxyCounter, answerProxyCounter);
-            }
-        }
+        //public static void QuestionAnswerProxy(bool questionProxy, bool answerProxy, int winProxyCounter, int answerProxyCounter)
+        //{
+        //    if (questionProxy)
+        //    {
+        //        answerProxy = true;
+        //    }
+        //    else
+        //    {
+        //        answerProxy = false;
+        //        UIMethod.CalculateWinningScore(winProxyCounter, answerProxyCounter);
+        //    }
+        //}
 
-        public static int CheckCorrectAnswer(string theAnswer, string correctAnswer)
+        public static int CheckCorrectAnswer(string theAnswer, string correctAnswer) //change from int to bool?
         {
             int totalCounter = 0;
             if (theAnswer != correctAnswer)
