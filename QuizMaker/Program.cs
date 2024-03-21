@@ -81,7 +81,7 @@ namespace QuizMaker
                         }
                     }
 
-                    Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); //for checks
+                    Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); //for check
 
                     int totalWinCounter = 0;
                     int totalAnswerCounter = 0;
