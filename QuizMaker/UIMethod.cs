@@ -18,15 +18,27 @@ namespace QuizMaker
 
         public static bool StoreQuestion()
         {
-            Console.WriteLine("Enter '1' to store question(s), or '0' to quit.\n");
-            int makeQuizDecision = int.Parse(Console.ReadLine());
+            Console.WriteLine("Enter '1' to store and/or answer question(s), or '0' to quit.\n");
+            int makeQuizDecision;
+            do
+            {
+                makeQuizDecision = int.Parse(Console.ReadLine());
+                if (makeQuizDecision != Constant.QUIZ_DECISION_YES && makeQuizDecision != Constant.QUIZ_DECISION_NO)
+                    Console.WriteLine("Not a valid input. Please try again");
+            } while (makeQuizDecision != 1 && makeQuizDecision != 0);
             return (makeQuizDecision == Constant.QUIZ_DECISION_YES);
         }
 
         public static bool RestartQuiz()
         {
             Console.WriteLine("Enter '1' to restart the quiz, or '0' to quit.\n");
-            int restart = int.Parse(Console.ReadLine());
+            int restart;
+            do
+            {
+                restart = int.Parse(Console.ReadLine());
+                if (restart != Constant.QUIZ_DECISION_YES && restart != Constant.QUIZ_DECISION_NO)
+                    Console.WriteLine("Not a valid input. Please try again");
+            } while (restart != 1 && restart != 0);
             return (restart == Constant.QUIZ_DECISION_YES);
         }
 
@@ -121,13 +133,11 @@ namespace QuizMaker
             return (newQuestion == Constant.QUIZ_DECISION_YES);
         }
 
-        public static void CalculateWinningScoreOnly(int currentScore, int maxScore)//int as example
+        public static void ShowWinningScore(int currentScore, int maxScore)
         {
             Console.WriteLine("***********YOUR SCORE**************");
-            //int theResult = (currentScore / maxScore) * 100;
             decimal theResult = (decimal)currentScore / maxScore * 100;
             Console.WriteLine($"You scored {currentScore} question(s) out of {maxScore} OR {theResult}%\n");
-            //return theResult;
         }
 
         public static void CalculateWinningScore(bool questionProxy, bool answerProxy, int currentScore, int maxScore)
@@ -141,26 +151,9 @@ namespace QuizMaker
             else
             {
                 answerProxy = false;
-                CalculateWinningScoreOnly(currentScore, maxScore);
-                //Console.WriteLine("***********YOUR FINAL SCORE**************");
-                //result = currentScore / maxScore * 100;
-                //Console.WriteLine($"You scored {currentScore} question(s) out of {maxScore} OR {result}%");
-                //UIMethod.CalculateWinningScore(winProxyCounter, answerProxyCounter);
+                ShowWinningScore(currentScore, maxScore);
             }
         }
-
-        //public static void QuestionAnswerProxy(bool questionProxy, bool answerProxy, int winProxyCounter, int answerProxyCounter)
-        //{
-        //    if (questionProxy)
-        //    {
-        //        answerProxy = true;
-        //    }
-        //    else
-        //    {
-        //        answerProxy = false;
-        //        UIMethod.CalculateWinningScore(winProxyCounter, answerProxyCounter);
-        //    }
-        //}
 
         public static string AddTheOption()
         {
@@ -177,6 +170,11 @@ namespace QuizMaker
         public static void ShowCorrectAnswerInputMessage()
         {
             Console.WriteLine("Input the correct answer to your question. It will not be shown to the user\n");
+        }
+
+        public static void ShowCompletedQuestionMessage()
+        {
+            Console.WriteLine("You have exhausted the number of questions you chose to store");
         }
 
 
@@ -215,7 +213,7 @@ namespace QuizMaker
             Console.WriteLine($"Question {questionPosition}: {mainQuestion}");
         }
 
-        public static void RepeatPlay(bool keepPlayingProxy, char quizSelectionProxy, int winProxy, int answerProxy)
+        public static char RepeatPlay(bool keepPlayingProxy, char quizSelectionProxy, int winProxy, int answerProxy)
         {
             if (keepPlayingProxy)
             {
@@ -227,8 +225,8 @@ namespace QuizMaker
             {
                 keepPlayingProxy = false;
                 DisplayQuitMessage();
-                //CalculateWinningScoreOnly(winProxy, answerProxy); //Instead of this method, I could do the coding in the RepeatPlay method?
             }
+            return quizSelectionProxy;
         }
 
     }

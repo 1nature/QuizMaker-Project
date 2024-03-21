@@ -10,6 +10,7 @@ namespace QuizMaker
             bool keepPlayingQuiz = true;
             int numberOfQuizzerQuestions = 0;
             char quizSelection;
+            char newQuizSelection;
             var randomQuestion = new Random();
 
             UIMethod.QuizWelcomeMessage();
@@ -32,7 +33,7 @@ namespace QuizMaker
 
                 while (keepPlayingQuiz)
                 {
-                    if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_STOREONLY) //mode selection
+                    if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_STOREONLY) 
                     {
                         //QuestionandAnswer newQna = UIMethod.GetQuestionandAnswerObjectFromUser();
                         //QuestionList.Add(newQna);
@@ -62,24 +63,29 @@ namespace QuizMaker
 
                         if (quizSelection == Constant.QUIZ_TYPE_STOREONLY && questionDecrement < Constant.MINIMUM_NUMBER_OF_QUESTION)
                         {
-                            Console.WriteLine("You have exhausted the number of questions you chose to store");
+                            UIMethod.ShowCompletedQuestionMessage();
                             keepPlayingQuiz = UIMethod.RestartQuiz();
                             if (!keepPlayingQuiz)
                             {
                                 break;
+                            }
+                            else
+                            {
+                                UIMethod.ShowQuizGameInstruction();
+                                quizSelection = UIMethod.GetQuizLineResponse();
+                                if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
+                                {
+                                    continue;
+                                }
                             }
                         }
                     }
 
                     Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); //for checks
 
-                    bool isValid = true;
-                    //int totalWinCounter = 0; //2 is for test
-                    int totalWinCounter = 0;//2 is for test
+                    int totalWinCounter = 0;
                     int totalAnswerCounter = 0;
 
-                    //if (isValid)
-                    //{
                     if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
                     {
                         DeserialisedList = LogicMethod.ReadQuizFromXml();
@@ -106,29 +112,20 @@ namespace QuizMaker
                                 string userAnswer = UIMethod.TakeUserAnswer();
                                 totalAnswerCounter++;
                                 UIMethod.WriteEmptyLine();
-                                //LogicMethod.CheckCorrectAnswer(userAnswer, randomlySelectedQuestion.CorrectAnswerText, totalWinCounter);
-                                //totalWinCounter = LogicMethod.CheckCorrectAnswer(userAnswer, randomlySelectedQuestion.CorrectAnswerText);
                                 int holdTheCounter = LogicMethod.CheckCorrectAnswer(userAnswer, randomlySelectedQuestion.CorrectAnswerText);
-                                totalWinCounter++;
-                                //int xtotalWinCounter = 0;
-                                //totalWinCounter++; //something wrong with my counter
-                                //counter counts even when answer is wrong!
+                                totalWinCounter = LogicMethod.CheckCorrectCount(holdTheCounter, totalWinCounter);
                                 DeserialisedList.Remove(randomlySelectedQuestion);
-                                //int xy = UIMethod.CalculateWinningScoreOnly(totalWinCounter, totalAnswerCounter);
 
                                 if (DeserialisedList.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
                                 {
-                                    int noCount = 0;
+                                    int noCount = Constant.QUIZ_DECISION_NO;
                                     questionInputCounter = noCount;
                                     break;
                                 }
 
                                 bool moreQuestion = UIMethod.AnswerAnotherQuestion();
-                                //moreQuestion = keepPlayingQuiz;
                                 if (!moreQuestion)
                                 {
-                                    //keepPlayingQuiz = false;
-                                    //UIMethod.CalculateWinningScore(moreQuestion, answerMoreQuestion, totalWinCounter, totalAnswerCounter);
                                     break;
                                 }
                                 else
@@ -136,26 +133,20 @@ namespace QuizMaker
                                     //need to debug this!
                                     UIMethod.CalculateWinningScore(moreQuestion, answerMoreQuestion, totalWinCounter, totalAnswerCounter);
                                 }
-                                //UIMethod.XCalculateWinningScore(moreQuestion, answerMoreQuestion, xtotalWinCounter, totalAnswerCounter);
-                                //above code not yet working
-                                
-
-                                //else
-                                //{
-                                //    bool moreQuestion = UIMethod.AnswerAnotherQuestion();
-                                //    UIMethod.XCalculateWinningScore(moreQuestion, answerMoreQuestion, xtotalWinCounter, totalAnswerCounter);
-                                //    //LogicMethod.QuestionAnswerProxy(moreQuestion, answerMoreQuestion, totalWinCounter, totalAnswerCounter);
-                                //}
                             }
                         }
                     }
-                    //totalWinCounter += totalWinCounter;
-                    int parseCounter = totalWinCounter;
-                    UIMethod.PrintNoMoreQuestionMessage();
-                    UIMethod.CalculateWinningScoreOnly(totalWinCounter, totalAnswerCounter);
-                    keepPlayingQuiz = UIMethod.RestartQuiz();
-                    // UIMethod.RepeatPlay(keepPlayingQuiz, quizSelection, totalWinCounter, totalAnswerCounter);
-                    UIMethod.RepeatPlay(keepPlayingQuiz, quizSelection, parseCounter, totalAnswerCounter);
+
+                    if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
+                    {
+                        int parseCounter = totalWinCounter;
+                        UIMethod.PrintNoMoreQuestionMessage();
+                        UIMethod.ShowWinningScore(totalWinCounter, totalAnswerCounter);
+                        keepPlayingQuiz = UIMethod.RestartQuiz();
+                        newQuizSelection = UIMethod.RepeatPlay(keepPlayingQuiz, quizSelection, parseCounter, totalAnswerCounter);
+                        quizSelection = newQuizSelection;
+                        countAnsweredQuestions = LogicMethod.RestartQuestionNumber(keepPlayingQuiz);
+                    }
                 }
             }
             else

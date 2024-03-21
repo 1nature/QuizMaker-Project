@@ -21,34 +21,31 @@ namespace QuizMaker
         public static void UserQuestion(string newQuestion)
         {
             Console.WriteLine(newQuestion);
-        }
-
-        //public static void QuestionAnswerProxy(bool questionProxy, bool answerProxy, int winProxyCounter, int answerProxyCounter)
-        //{
-        //    if (questionProxy)
-        //    {
-        //        answerProxy = true;
-        //    }
-        //    else
-        //    {
-        //        answerProxy = false;
-        //        UIMethod.CalculateWinningScore(winProxyCounter, answerProxyCounter);
-        //    }
-        //}
-
-        public static int CheckCorrectAnswer(string theAnswer, string correctAnswer) //change from int to bool?
+        }       
+        
+        public static int CheckCorrectAnswer(string theAnswer, string correctAnswer) 
         {
             int totalCounter = 0;
             if (theAnswer != correctAnswer)
             {
+                totalCounter = Constant.QUIZ_DECISION_NO;
                 UIMethod.LossMessage();
             }
             else
             {
-                totalCounter++;
+                totalCounter = Constant.QUIZ_DECISION_YES;
                 UIMethod.WinMessage();
             }
             return totalCounter;
+        }
+
+        public static int CheckCorrectCount(int holdCount, int winCount)
+        {
+            if (holdCount == Constant.QUIZ_DECISION_YES)
+            {
+                winCount++;
+            }
+            return winCount;
         }
 
         public static void TakeAnswerOption(int optionTotal, string theOption, List<string> optionInput)
@@ -79,6 +76,16 @@ namespace QuizMaker
                 storedList = theVariable.Deserialize(file) as List<QuestionandAnswer>;
             }
             return storedList;
+        }
+
+        public static int RestartQuestionNumber(bool restartCondition)
+        {
+            int answerCount = 0;
+            if (restartCondition)
+            {
+                answerCount = 0;
+            }
+            return answerCount;
         }
     }
 }
