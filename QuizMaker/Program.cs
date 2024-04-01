@@ -33,7 +33,7 @@ namespace QuizMaker
 
                 while (keepPlayingQuiz)
                 {
-                    if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_STOREONLY) 
+                    if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_STOREONLY)
                     {
                         //QuestionandAnswer newQna = UIMethod.GetQuestionandAnswerObjectFromUser();
                         //QuestionList.Add(newQna);
@@ -69,18 +69,16 @@ namespace QuizMaker
                             {
                                 break;
                             }
-                            else
-                            {
-                                UIMethod.ShowQuizGameInstruction();
-                                quizSelection = UIMethod.GetQuizLineResponse();
-                                if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
-                                {
-                                    continue;
-                                }
-                            }
+                        }
+
+                        UIMethod.ShowQuizGameInstruction();
+                        quizSelection = UIMethod.GetQuizLineResponse();
+                        if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
+                        {
+                            continue;
                         }
                     }
-
+                                     
                     Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); //for check
 
                     int totalWinCounter = 0;
