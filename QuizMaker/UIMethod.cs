@@ -193,13 +193,13 @@ namespace QuizMaker
             return theUserAnswer;
         }
 
-        public static void PrintRandomQuestion(List<string> listOfQuestions, int optionNumber)
+        public static void PrintRandomQuestion(List<string> listOfQuestions)
         {
-
+            int optionCounter = Constant.COUNT_OPTION;
             foreach (var option in listOfQuestions)
             {
-                Console.WriteLine($"Option {optionNumber}: {option}");
-                optionNumber++;
+                Console.WriteLine($"Option {optionCounter}: {option}");
+                optionCounter++;
             }
         }
 

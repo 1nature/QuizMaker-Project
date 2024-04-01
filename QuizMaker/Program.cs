@@ -102,9 +102,8 @@ namespace QuizMaker
                                 QuestionandAnswer randomlySelectedQuestion = LogicMethod.FetchRandomQuestion(FetchQuestionAndAnswers, randomQuestion);
                                 UIMethod.PrintQuestionToUser(countAnsweredQuestions, randomlySelectedQuestion.QuestionText);
                                 UIMethod.WriteEmptyLine();
-                                int optionCounter = Constant.COUNT_OPTION;
 
-                                UIMethod.PrintRandomQuestion(randomlySelectedQuestion.ListofQuestionandAnswers, optionCounter);
+                                UIMethod.PrintRandomQuestion(randomlySelectedQuestion.ListofQuestionandAnswers);
                                 UIMethod.WriteEmptyLine();
                                 UIMethod.PrintAnswerInputInstruction();
                                 string userAnswer = UIMethod.TakeUserAnswer();
