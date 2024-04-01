@@ -96,7 +96,7 @@ namespace QuizMaker
         {
             bool valid = false;
             int number = 0;
-            while (valid == false)
+            while (!valid)
             {
                 Console.WriteLine(promt);
                 string theInput = Console.ReadLine();
