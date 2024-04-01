@@ -17,7 +17,7 @@ namespace QuizMaker
             UIMethod.WriteEmptyLine();
 
             var QuestionList = new List<QuestionandAnswer>();
-            var DeserialisedList = new List<QuestionandAnswer>();
+            var FetchQuestionAndAnswers = new List<QuestionandAnswer>();
 
 
             continueStoringQuestion = UIMethod.StoreQuestion();
@@ -88,20 +88,20 @@ namespace QuizMaker
 
                     if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
                     {
-                        DeserialisedList = LogicMethod.ReadQuizFromXml();
-                        UIMethod.DisplayUserInstruction(DeserialisedList.Count);
+                        FetchQuestionAndAnswers = LogicMethod.ReadQuizFromXml();
+                        UIMethod.DisplayUserInstruction(FetchQuestionAndAnswers.Count);
 
                         bool answerMoreQuestion = true;
                         while (answerMoreQuestion)
                         {
                             countAnsweredQuestions++;
-                            if (DeserialisedList.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
+                            if (FetchQuestionAndAnswers.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
                             {
                                 UIMethod.PrintNoMoreQuestionMessage();
                             }
                             else
                             {
-                                QuestionandAnswer randomlySelectedQuestion = LogicMethod.FetchRandomQuestion(DeserialisedList, randomQuestion);
+                                QuestionandAnswer randomlySelectedQuestion = LogicMethod.FetchRandomQuestion(FetchQuestionAndAnswers, randomQuestion);
                                 UIMethod.PrintQuestionToUser(countAnsweredQuestions, randomlySelectedQuestion.QuestionText);
                                 UIMethod.WriteEmptyLine();
                                 int optionCounter = Constant.COUNT_OPTION;
@@ -114,9 +114,9 @@ namespace QuizMaker
                                 UIMethod.WriteEmptyLine();
                                 int holdTheCounter = LogicMethod.CheckCorrectAnswer(userAnswer, randomlySelectedQuestion.CorrectAnswerText);
                                 totalWinCounter = LogicMethod.CheckCorrectCount(holdTheCounter, totalWinCounter);
-                                DeserialisedList.Remove(randomlySelectedQuestion);
+                                FetchQuestionAndAnswers.Remove(randomlySelectedQuestion);
 
-                                if (DeserialisedList.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
+                                if (FetchQuestionAndAnswers.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
                                 {
                                     int noCount = Constant.QUIZ_DECISION_NO;
                                     questionInputCounter = noCount;
