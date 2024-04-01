@@ -44,7 +44,7 @@ namespace QuizMaker
                         {
                             questionInputCounter++;
                             var EachQuestionInput = new QuestionandAnswer();
-                            EachQuestionInput.QuestionText = UIMethod.DisplayQuizzerInstruction(questionInputCounter);
+                            EachQuestionInput.QuestionText = UIMethod.TakeUserQuestion(questionInputCounter);
                             UIMethod.WriteEmptyLine();
                             questionDecrement--;
 

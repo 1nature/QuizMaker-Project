@@ -85,7 +85,7 @@ namespace QuizMaker
             Console.WriteLine("There are no more questions left to answer\n");
         }
 
-        public static string DisplayQuizzerInstruction(int questionInputTracker)
+        public static string TakeUserQuestion(int questionInputTracker)
         {
             Console.WriteLine($"Input the question number: {questionInputTracker}\n");
             string quizzerReply = Console.ReadLine().ToLower();
