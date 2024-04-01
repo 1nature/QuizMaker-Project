@@ -58,10 +58,10 @@ namespace QuizMaker
                 quizLineChoice = char.Parse(Console.ReadLine());
                 quizLineChoice = char.ToUpper(quizLineChoice);
 
-                if (quizLineChoice != 'A' && quizLineChoice != 'B' && quizLineChoice != 'C')
+                if (quizLineChoice != Constant.QUIZ_TYPE_STOREANDANSWER && quizLineChoice != Constant.QUIZ_TYPE_STOREONLY && quizLineChoice != Constant.QUIZ_TYPE_ANSWERONLY)
                     Console.WriteLine("Not a valid input. Please try again");
 
-            } while (quizLineChoice != 'A' && quizLineChoice != 'B' && quizLineChoice != 'C');
+            } while (quizLineChoice != Constant.QUIZ_TYPE_STOREANDANSWER && quizLineChoice != Constant.QUIZ_TYPE_STOREONLY && quizLineChoice != Constant.QUIZ_TYPE_ANSWERONLY);
             return quizLineChoice;
         }
 
