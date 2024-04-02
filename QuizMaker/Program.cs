@@ -1,5 +1,4 @@
 ﻿using static QuizMaker.QnAClass;
-
 namespace QuizMaker
 {
     internal class Program
@@ -17,6 +16,7 @@ namespace QuizMaker
             UIMethod.WriteEmptyLine();
 
             var QuestionList = new List<QuestionandAnswer>();
+            var MyList = new List<QuestionandAnswer>();
             var FetchQuestionAndAnswers = new List<QuestionandAnswer>();
 
 
@@ -35,32 +35,17 @@ namespace QuizMaker
                 {
                     if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_STOREONLY)
                     {
-                        //QuestionandAnswer newQna = UIMethod.GetQuestionandAnswerObjectFromUser();
-                        //QuestionList.Add(newQna);
-
-                        numberOfQuizzerQuestions = UIMethod.GetIntFromUser("Input the number of questions you want to store:");
+                        numberOfQuizzerQuestions = UIMethod.GetIntFromUser("Input the number of questions you want to store: \n");
                         int questionDecrement = numberOfQuizzerQuestions;
+
                         for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
                         {
-                            questionInputCounter++;
-                            var EachQuestionInput = new QuestionandAnswer();
-                            EachQuestionInput.QuestionText = UIMethod.TakeUserQuestion(questionInputCounter);
-                            UIMethod.WriteEmptyLine();
+                            QuestionandAnswer newQna = (QuestionandAnswer)UIMethod.GetQuestionandAnswerObjectFromUser();
+                            QuestionList.Add(newQna);
                             questionDecrement--;
-
-                            int maximumOptions = UIMethod.GetIntFromUser("Input the number of options to your question?\n");
-                            UIMethod.WriteEmptyLine();
-                            UIMethod.ShowOptionsMessage();
-                            LogicMethod.TakeAnswerOption(maximumOptions, quizAnswerOptions, EachQuestionInput.ListofQuestionandAnswers);
-
-                            UIMethod.WriteEmptyLine();
-                            UIMethod.ShowCorrectAnswerInputMessage();
-                            EachQuestionInput.CorrectAnswerText = UIMethod.AddCorrectOption();
-                            UIMethod.WriteEmptyLine();
-                            QuestionList.Add(EachQuestionInput);
                         }
                         LogicMethod.SerializeData(QuestionList);
-
+                        
                         if (quizSelection == Constant.QUIZ_TYPE_STOREONLY && questionDecrement < Constant.MINIMUM_NUMBER_OF_QUESTION)
                         {
                             UIMethod.ShowCompletedQuestionMessage();
@@ -69,16 +54,18 @@ namespace QuizMaker
                             {
                                 break;
                             }
-                        }
-
-                        UIMethod.ShowQuizGameInstruction();
-                        quizSelection = UIMethod.GetQuizLineResponse();
-                        if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
-                        {
-                            continue;
+                            else
+                            {
+                                UIMethod.ShowQuizGameInstruction();
+                                quizSelection = UIMethod.GetQuizLineResponse();
+                                if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
+                                {
+                                    continue;
+                                }
+                            }
                         }
                     }
-                                     
+
                     Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); //for check
 
                     int totalWinCounter = 0;
@@ -127,7 +114,6 @@ namespace QuizMaker
                                 }
                                 else
                                 {
-                                    //need to debug this!
                                     UIMethod.CalculateWinningScore(moreQuestion, answerMoreQuestion, totalWinCounter, totalAnswerCounter);
                                 }
                             }

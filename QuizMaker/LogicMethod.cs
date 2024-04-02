@@ -21,9 +21,9 @@ namespace QuizMaker
         public static void UserQuestion(string newQuestion)
         {
             Console.WriteLine(newQuestion);
-        }       
-        
-        public static int CheckCorrectAnswer(string theAnswer, string correctAnswer) 
+        }
+
+        public static int CheckCorrectAnswer(string theAnswer, string correctAnswer)
         {
             int totalCounter = 0;
             if (theAnswer != correctAnswer)
@@ -50,6 +50,7 @@ namespace QuizMaker
 
         public static void TakeAnswerOption(int optionTotal, string theOption, List<string> optionInput)
         {
+            UIMethod.ShowOptionsMessage();
             for (int Index = 0; Index < optionTotal; Index++)
             {
                 theOption = UIMethod.AddTheOption();

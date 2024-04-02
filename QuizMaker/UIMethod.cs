@@ -4,6 +4,24 @@ namespace QuizMaker
 {
     public static class UIMethod
     {
+        public static Object GetQuestionandAnswerObjectFromUser()
+        {
+            var EachQuestionInput = new QuestionandAnswer();
+            string quizAnswerOptions = "";
+            var QuestionList = new List<QuestionandAnswer>();
+                        
+            EachQuestionInput.QuestionText = TakeUserQuestion();
+            WriteEmptyLine();
+            int maximumOptions = GetIntFromUser("Input the number of options to your question?\n");
+            WriteEmptyLine();
+            LogicMethod.TakeAnswerOption(maximumOptions, quizAnswerOptions, EachQuestionInput.ListofQuestionandAnswers);
+            WriteEmptyLine();
+            ShowCorrectAnswerInputMessage();
+            EachQuestionInput.CorrectAnswerText = AddCorrectOption();
+            WriteEmptyLine();
+            return EachQuestionInput;
+        }
+
         public static void QuizWelcomeMessage()
         {
             Console.WriteLine("Welcome!\n");
@@ -14,19 +32,6 @@ namespace QuizMaker
         public static void DisplayQuitMessage()
         {
             Console.WriteLine("You have decided not to play the quiz game.");
-        }
-
-        public static bool StoreQuestion()
-        {
-            Console.WriteLine("Enter '1' to store and/or answer question(s), or '0' to quit.\n");
-            int makeQuizDecision;
-            do
-            {
-                makeQuizDecision = int.Parse(Console.ReadLine());
-                if (makeQuizDecision != Constant.QUIZ_DECISION_YES && makeQuizDecision != Constant.QUIZ_DECISION_NO)
-                    Console.WriteLine("Not a valid input. Please try again");
-            } while (makeQuizDecision != 1 && makeQuizDecision != 0);
-            return (makeQuizDecision == Constant.QUIZ_DECISION_YES);
         }
 
         public static bool RestartQuiz()
@@ -48,6 +53,40 @@ namespace QuizMaker
             Console.WriteLine("If you want to store and answer questions, enter 'A'");
             Console.WriteLine("If you want to store questions only, enter 'B'");
             Console.WriteLine("If you want to answer questions only, enter 'C'\n");
+        }
+
+        public static bool StoreQuestion()
+        {
+            Console.WriteLine("Enter '1' to store and/or answer question(s), or '0' to quit.\n");
+            int makeQuizDecision;
+            do
+            {
+                makeQuizDecision = int.Parse(Console.ReadLine());
+                if (makeQuizDecision != Constant.QUIZ_DECISION_YES && makeQuizDecision != Constant.QUIZ_DECISION_NO)
+                    Console.WriteLine("Not a valid input. Please try again");
+            } while (makeQuizDecision != Constant.QUIZ_DECISION_YES && makeQuizDecision != Constant.QUIZ_DECISION_NO);
+            return (makeQuizDecision == Constant.QUIZ_DECISION_YES);
+        }
+
+        public static int GetIntFromUser(string promt)
+        {
+            bool valid = false;
+            int number = 0;
+            while (!valid)
+            {
+                Console.WriteLine(promt);
+                string theInput = Console.ReadLine() + "\n";
+
+                if (int.TryParse(theInput, out number))
+                {
+                    valid = true;
+                }
+                else
+                {
+                    Console.WriteLine("Not a valid input, please try again");
+                }
+            }
+            return number;
         }
 
         public static char GetQuizLineResponse()
@@ -85,39 +124,11 @@ namespace QuizMaker
             Console.WriteLine("There are no more questions left to answer\n");
         }
 
-        public static string TakeUserQuestion(int questionInputTracker)
+        public static string TakeUserQuestion()
         {
-            Console.WriteLine($"Input the question number: {questionInputTracker}\n");
-            string quizzerReply = Console.ReadLine().ToLower();
+            Console.WriteLine("Input your question\n"); // number: {questionInputTracker}\n");
+            string quizzerReply = Console.ReadLine().ToLower() + "\n";
             return quizzerReply;
-        }
-
-        public static int GetIntFromUser(string promt)
-        {
-            bool valid = false;
-            int number = 0;
-            while (!valid)
-            {
-                Console.WriteLine(promt);
-                string theInput = Console.ReadLine();
-
-                if (int.TryParse(theInput, out number))
-                {
-                    valid = true;
-                }
-                else
-                {
-                    Console.WriteLine("Not a valid input, please try again");
-                }
-            }
-            return number;
-        }
-
-        public static QuestionandAnswer GetQuestionandAnswerObjectFromUser()
-        {
-            QuestionandAnswer returnValue = new();
-            int numberOfQuizzerQuestions = GetIntFromUser("Number of question please:");
-            return returnValue;
         }
 
         public static void ShowOptionsMessage()
@@ -129,7 +140,7 @@ namespace QuizMaker
             Console.WriteLine("*********************************************");
             Console.WriteLine("Enter '1' to answer another question, or '0' to quit the game.");
             int newQuestion = int.Parse(Console.ReadLine());
-            UIMethod.WriteEmptyLine();
+            WriteEmptyLine();
             return (newQuestion == Constant.QUIZ_DECISION_YES);
         }
 
@@ -188,7 +199,7 @@ namespace QuizMaker
 
         public static string TakeUserAnswer()
         {
-            UIMethod.WriteEmptyLine();
+            WriteEmptyLine();
             string theUserAnswer = Console.ReadLine().ToLower();
             return theUserAnswer;
         }
