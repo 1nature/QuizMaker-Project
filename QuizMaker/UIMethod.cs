@@ -16,7 +16,6 @@ namespace QuizMaker
             WriteEmptyLine();
             LogicMethod.TakeAnswerOption(maximumOptions, quizAnswerOptions, EachQuestionInput.ListofQuestionandAnswers);
             WriteEmptyLine();
-            ShowCorrectAnswerInputMessage();
             EachQuestionInput.CorrectAnswerText = AddCorrectOption();
             WriteEmptyLine();
             return EachQuestionInput;
@@ -174,6 +173,7 @@ namespace QuizMaker
 
         public static string AddCorrectOption()
         {
+            ShowCorrectAnswerInputMessage();
             string correctOption = Console.ReadLine().ToLower();
             return correctOption;
         }
