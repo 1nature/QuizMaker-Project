@@ -125,7 +125,7 @@ namespace QuizMaker
 
         public static string TakeUserQuestion()
         {
-            Console.WriteLine("Input your question\n"); // number: {questionInputTracker}\n");
+            Console.WriteLine("Input your question\n");
             string quizzerReply = Console.ReadLine().ToLower() + "\n";
             return quizzerReply;
         }
@@ -187,7 +187,6 @@ namespace QuizMaker
         {
             Console.WriteLine("You have exhausted the number of questions you chose to store");
         }
-
 
         public static void DisplayUserInstruction(int availableQuestions)
         {

@@ -18,9 +18,12 @@ namespace QuizMaker
             return answerX;
         }
 
-        public static void UserQuestion(string newQuestion)
+        public static int RemoveText(string getAnswer, QuestionandAnswer removeText, List<QuestionandAnswer> removeFetched)
         {
-            Console.WriteLine(newQuestion);
+            UIMethod.WriteEmptyLine();
+            int holdTheCounter = LogicMethod.CheckCorrectAnswer(getAnswer, removeText.CorrectAnswerText);
+            removeFetched.Remove(removeText);
+            return holdTheCounter;
         }
 
         public static int CheckCorrectAnswer(string theAnswer, string correctAnswer)
@@ -37,15 +40,6 @@ namespace QuizMaker
                 UIMethod.WinMessage();
             }
             return totalCounter;
-        }
-
-        public static int CheckCorrectCount(int holdCount, int winCount)
-        {
-            if (holdCount == Constant.QUIZ_DECISION_YES)
-            {
-                winCount++;
-            }
-            return winCount;
         }
 
         public static void TakeAnswerOption(int optionTotal, string theOption, List<string> optionInput)
@@ -77,6 +71,44 @@ namespace QuizMaker
                 storedList = theVariable.Deserialize(file) as List<QuestionandAnswer>;
             }
             return storedList;
+        }
+
+        public static int TryMethodOne(List<QuestionandAnswer> storageList)
+        {
+            int numberOfQuizzerQuestions = UIMethod.GetIntFromUser("Input the number of questions you want to store: \n");
+            int questionDecrement = numberOfQuizzerQuestions;
+
+            for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
+            {
+                QuestionandAnswer newQna = (QuestionandAnswer)UIMethod.GetQuestionandAnswerObjectFromUser();
+                storageList.Add(newQna);
+                questionDecrement--;
+            }
+            LogicMethod.SerializeData(storageList);
+            return questionDecrement;
+        }
+
+        public static QuestionandAnswer RetrieveQuestion(List<QuestionandAnswer> fetch, Random theRand, int countAnswer)
+        {
+            QuestionandAnswer randomlySelectedQuestion = LogicMethod.FetchRandomQuestion(fetch, theRand);
+            UIMethod.PrintQuestionToUser(countAnswer, randomlySelectedQuestion.QuestionText);
+            UIMethod.WriteEmptyLine();
+
+            UIMethod.PrintRandomQuestion(randomlySelectedQuestion.ListofQuestionandAnswers);
+            UIMethod.WriteEmptyLine();
+            UIMethod.PrintAnswerInputInstruction();
+            return randomlySelectedQuestion;
+        }
+
+        public static bool CheckQuizConditionThree(char select, int winKounter, int maxCounter)
+        {
+            int parseCounter = winKounter;
+            UIMethod.PrintNoMoreQuestionMessage();
+            UIMethod.ShowWinningScore(winKounter, maxCounter);
+            bool keepPlay = UIMethod.RestartQuiz();
+            char newSelect = UIMethod.RepeatPlay(keepPlay, select, parseCounter, maxCounter);
+            select = newSelect;
+            return keepPlay;
         }
 
         public static int RestartQuestionNumber(bool restartCondition)
