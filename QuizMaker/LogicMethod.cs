@@ -20,7 +20,6 @@ namespace QuizMaker
 
         public static int RemoveText(string getAnswer, QuestionandAnswer removeText, List<QuestionandAnswer> removeFetched)
         {
-            UIMethod.WriteEmptyLine();
             int holdTheCounter = LogicMethod.CheckCorrectAnswer(getAnswer, removeText.CorrectAnswerText);
             removeFetched.Remove(removeText);
             return holdTheCounter;
@@ -92,10 +91,7 @@ namespace QuizMaker
         {
             QuestionandAnswer randomlySelectedQuestion = LogicMethod.FetchRandomQuestion(fetch, theRand);
             UIMethod.PrintQuestionToUser(countAnswer, randomlySelectedQuestion.QuestionText);
-            UIMethod.WriteEmptyLine();
-
             UIMethod.PrintRandomQuestion(randomlySelectedQuestion.ListofQuestionandAnswers);
-            UIMethod.WriteEmptyLine();
             UIMethod.PrintAnswerInputInstruction();
             return randomlySelectedQuestion;
         }

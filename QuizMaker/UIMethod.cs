@@ -11,13 +11,9 @@ namespace QuizMaker
             var QuestionList = new List<QuestionandAnswer>();
                         
             EachQuestionInput.QuestionText = TakeUserQuestion();
-            WriteEmptyLine();
             int maximumOptions = GetIntFromUser("Input the number of options to your question?\n");
-            WriteEmptyLine();
             LogicMethod.TakeAnswerOption(maximumOptions, quizAnswerOptions, EachQuestionInput.ListofQuestionandAnswers);
-            WriteEmptyLine();
             EachQuestionInput.CorrectAnswerText = AddCorrectOption();
-            WriteEmptyLine();
             return EachQuestionInput;
         }
 
@@ -103,11 +99,6 @@ namespace QuizMaker
             return quizLineChoice;
         }
 
-        public static void WriteEmptyLine()
-        {
-            Console.WriteLine();
-        }
-
         public static void WinMessage()
         {
             Console.WriteLine("Correct answer. You have a score\n");
@@ -139,7 +130,6 @@ namespace QuizMaker
             Console.WriteLine("*********************************************");
             Console.WriteLine("Enter '1' to answer another question, or '0' to quit the game.");
             int newQuestion = int.Parse(Console.ReadLine());
-            WriteEmptyLine();
             return (newQuestion == Constant.QUIZ_DECISION_YES);
         }
 
@@ -198,7 +188,6 @@ namespace QuizMaker
 
         public static string TakeUserAnswer()
         {
-            WriteEmptyLine();
             string theUserAnswer = Console.ReadLine().ToLower();
             return theUserAnswer;
         }
@@ -229,7 +218,6 @@ namespace QuizMaker
             {
                 ShowQuizGameInstruction();
                 quizSelectionProxy = GetQuizLineResponse();
-                WriteEmptyLine();
             }
             else
             {

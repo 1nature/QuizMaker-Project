@@ -16,14 +16,11 @@ namespace QuizMaker
             var FetchQuestionAndAnswers = new List<QuestionandAnswer>();
 
             UIMethod.QuizWelcomeMessage();
-            UIMethod.WriteEmptyLine();
             continueStoringQuestion = UIMethod.StoreQuestion();
             if (continueStoringQuestion)
             {
-                UIMethod.WriteEmptyLine();
                 UIMethod.ShowQuizGameInstruction();
                 quizSelection = UIMethod.GetQuizLineResponse();
-                UIMethod.WriteEmptyLine();
                 int questionInputCounter = 0;
                 int countAnsweredQuestions = 0;
                 string quizAnswerOptions = "";
