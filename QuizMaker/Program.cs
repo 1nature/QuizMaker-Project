@@ -32,7 +32,7 @@ namespace QuizMaker
                 {
                     if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_STOREONLY)
                     {
-                        int theDecrement = LogicMethod.TryMethodOne(QuestionList);
+                        int theDecrement = LogicMethod.CheckConditionOne(QuestionList);
 
                         if (quizSelection == Constant.QUIZ_TYPE_STOREONLY && theDecrement < Constant.MINIMUM_NUMBER_OF_QUESTION)
                         {
@@ -117,7 +117,7 @@ namespace QuizMaker
                 while (!continueStoringQuestion)
                 {
                     UIMethod.DisplayQuitMessage();
-                    break;
+                    break; //
                 }
             }
         }

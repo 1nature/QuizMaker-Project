@@ -73,7 +73,7 @@ namespace QuizMaker
             return storedList;
         }
 
-        public static int TryMethodOne(List<QuestionandAnswer> storageList)
+        public static int CheckConditionOne(List<QuestionandAnswer> storageList)
         {
             int numberOfQuizzerQuestions = UIMethod.GetIntFromUser("Input the number of questions you want to store: \n");
             int questionDecrement = numberOfQuizzerQuestions;
