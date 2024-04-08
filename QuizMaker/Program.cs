@@ -54,7 +54,7 @@ namespace QuizMaker
                         }
 
                     }
-                    Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); //for check
+                    Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); //for checks
 
                     if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
                     {
