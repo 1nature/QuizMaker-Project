@@ -33,7 +33,7 @@
                         if (quizSelection == Constant.QUIZ_TYPE_STOREONLY && theDecrement < Constant.MINIMUM_NUMBER_OF_QUESTION)
                         {
                             UIMethod.ShowCompletedQuestionMessage();
-                            keepPlayingQuiz = UIMethod.RestartQuiz(); //
+                            keepPlayingQuiz = UIMethod.RestartQuiz(); 
                             if (!keepPlayingQuiz)
                             {
                                 break;
@@ -73,7 +73,7 @@
                                 QuestionandAnswer retrievedText = UIMethod.DisplayQuestionAndAnswersToUser(theSelected, countAnsweredQuestions);
                                 string userAnswer = UIMethod.TakeUserAnswer();
                                 totalAnswerCounter++;                                
-                                bool holdTheCondition = LogicMethod.RemoveText(userAnswer, retrievedText, FetchQuestionAndAnswers);
+                                bool holdTheCondition = LogicMethod.RemoveQuestionFromList(userAnswer, retrievedText, FetchQuestionAndAnswers);
                                 
                                 if (holdTheCondition)
                                 {

@@ -17,7 +17,7 @@ namespace QuizMaker
             return answerX;
         }
 
-        public static bool RemoveText(string getAnswer, QuestionandAnswer removeText, List<QuestionandAnswer> removeFetched)
+        public static bool RemoveQuestionFromList(string getAnswer, QuestionandAnswer removeText, List<QuestionandAnswer> removeFetched)
         {          
             bool forChecks = CheckCorrectAnswer(getAnswer, removeText.CorrectAnswerText);
             removeFetched.Remove(removeText);
