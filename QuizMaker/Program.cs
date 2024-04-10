@@ -77,10 +77,10 @@
                                 
                                 if (holdTheCondition)
                                 {
-                                    UIMethod.WinMessage();
+                                    UIMethod.PrintWinMessage();
                                     totalWinCounter++;
                                 }
-                                else { UIMethod.LossMessage(); }
+                                else { UIMethod.PrintLossMessage(); }
                                 
                                 if (FetchQuestionAndAnswers.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
                                 {

@@ -120,12 +120,12 @@
             return quizLineChoice;
         }
 
-        public static void WinMessage()
+        public static void PrintWinMessage()
         {
             Console.WriteLine("Correct answer. You have a score\n");
         }
 
-        public static void LossMessage()
+        public static void PrintLossMessage()
         {
             Console.WriteLine("Incorrect answer. You have no score\n");
         }
