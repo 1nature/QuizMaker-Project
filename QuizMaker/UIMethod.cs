@@ -4,6 +4,15 @@ namespace QuizMaker
 {
     public static class UIMethod
     {
+
+        public static QuestionandAnswer DisplayQuestionAndAnswersToUser(QuestionandAnswer randomlySelectedQuestion, int countAnswer)
+        {
+            UIMethod.PrintQuestionToUser(countAnswer, randomlySelectedQuestion.QuestionText);
+            UIMethod.PrintRandomQuestion(randomlySelectedQuestion.ListofQuestionandAnswers);
+            UIMethod.PrintAnswerInputInstruction();
+            return randomlySelectedQuestion;
+        }
+        
         public static QuestionandAnswer GetQuestionandAnswerObjectFromUser()
         {
             var EachQuestionInput = new QuestionandAnswer();

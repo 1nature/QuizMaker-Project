@@ -69,7 +69,8 @@ namespace QuizMaker
                             }
                             else
                             {
-                                QuestionandAnswer retrievedText = LogicMethod.RetrieveQuestion(FetchQuestionAndAnswers, randomQuestion, countAnsweredQuestions);
+                                QuestionandAnswer theSelected = LogicMethod.FetchRandomQuestion(FetchQuestionAndAnswers, randomQuestion);
+                                QuestionandAnswer retrievedText = UIMethod.DisplayQuestionAndAnswersToUser(theSelected, countAnsweredQuestions);
                                 string userAnswer = UIMethod.TakeUserAnswer();
                                 totalAnswerCounter++;
                                 int holdIt = LogicMethod.RemoveText(userAnswer, retrievedText, FetchQuestionAndAnswers);

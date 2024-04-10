@@ -87,15 +87,6 @@ namespace QuizMaker
             return questionDecrement;
         }
 
-        public static QuestionandAnswer RetrieveQuestion(List<QuestionandAnswer> fetch, Random theRand, int countAnswer)
-        {
-            QuestionandAnswer randomlySelectedQuestion = LogicMethod.FetchRandomQuestion(fetch, theRand);
-            UIMethod.PrintQuestionToUser(countAnswer, randomlySelectedQuestion.QuestionText);
-            UIMethod.PrintRandomQuestion(randomlySelectedQuestion.ListofQuestionandAnswers);
-            UIMethod.PrintAnswerInputInstruction();
-            return randomlySelectedQuestion;
-        }
-
         public static bool CheckQuizConditionThree(char select, int winKounter, int maxCounter)
         {
             int parseCounter = winKounter;
