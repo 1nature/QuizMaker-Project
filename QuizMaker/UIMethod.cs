@@ -29,7 +29,6 @@
         {
             var EachQuestionInput = new QuestionandAnswer();
             string quizAnswerOptions = "";
-            var QuestionList = new List<QuestionandAnswer>();
                         
             EachQuestionInput.QuestionText = TakeUserQuestion();
             int maximumOptions = GetIntFromUser("Input the number of options to your question?\n");
