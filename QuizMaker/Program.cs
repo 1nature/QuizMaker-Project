@@ -33,7 +33,7 @@
                         if (quizSelection == Constant.QUIZ_TYPE_STOREONLY && theDecrement < Constant.MINIMUM_NUMBER_OF_QUESTION)
                         {
                             UIMethod.ShowCompletedQuestionMessage();
-                            keepPlayingQuiz = UIMethod.RestartQuiz();
+                            keepPlayingQuiz = UIMethod.RestartQuiz(); //
                             if (!keepPlayingQuiz)
                             {
                                 break;
