@@ -1,5 +1,5 @@
 ﻿using System.Xml.Serialization;
-using static QuizMaker.QnAClass;
+using static QuizMaker.QuestionandAnswer;
 
 namespace QuizMaker
 {

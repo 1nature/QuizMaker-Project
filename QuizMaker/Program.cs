@@ -1,4 +1,4 @@
-﻿using static QuizMaker.QnAClass;
+﻿using static QuizMaker.QuestionandAnswer;
 namespace QuizMaker
 {
     internal class Program
