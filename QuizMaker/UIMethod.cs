@@ -4,7 +4,7 @@ namespace QuizMaker
 {
     public static class UIMethod
     {
-        public static Object GetQuestionandAnswerObjectFromUser()
+        public static QuestionandAnswer GetQuestionandAnswerObjectFromUser()
         {
             var EachQuestionInput = new QuestionandAnswer();
             string quizAnswerOptions = "";

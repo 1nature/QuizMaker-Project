@@ -79,7 +79,7 @@ namespace QuizMaker
 
             for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
             {
-                QuestionandAnswer newQna = (QuestionandAnswer)UIMethod.GetQuestionandAnswerObjectFromUser();
+                QuestionandAnswer newQna = UIMethod.GetQuestionandAnswerObjectFromUser();
                 storageList.Add(newQna);
                 questionDecrement--;
             }
