@@ -7,9 +7,9 @@ namespace QuizMaker
 
         public static QuestionandAnswer DisplayQuestionAndAnswersToUser(QuestionandAnswer randomlySelectedQuestion, int countAnswer)
         {
-            UIMethod.PrintQuestionToUser(countAnswer, randomlySelectedQuestion.QuestionText);
-            UIMethod.PrintRandomQuestion(randomlySelectedQuestion.ListofQuestionandAnswers);
-            UIMethod.PrintAnswerInputInstruction();
+            PrintQuestionToUser(countAnswer, randomlySelectedQuestion.QuestionText);
+            PrintRandomQuestion(randomlySelectedQuestion.ListofQuestionandAnswers);
+            PrintAnswerInputInstruction();
             return randomlySelectedQuestion;
         }
         

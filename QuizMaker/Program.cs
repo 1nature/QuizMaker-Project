@@ -67,18 +67,21 @@ namespace QuizMaker
                                 UIMethod.PrintNoMoreQuestionMessage();
                                 break;
                             }
+
                             else
                             {
                                 QuestionandAnswer theSelected = LogicMethod.FetchRandomQuestion(FetchQuestionAndAnswers, randomQuestion);
                                 QuestionandAnswer retrievedText = UIMethod.DisplayQuestionAndAnswersToUser(theSelected, countAnsweredQuestions);
                                 string userAnswer = UIMethod.TakeUserAnswer();
-                                totalAnswerCounter++;
-                                int holdIt = LogicMethod.RemoveText(userAnswer, retrievedText, FetchQuestionAndAnswers);
-
-                                if (holdIt == Constant.QUIZ_DECISION_YES)
+                                totalAnswerCounter++;                                
+                                bool holdTheCondition = LogicMethod.RemoveText(userAnswer, retrievedText, FetchQuestionAndAnswers);
+                                
+                                if (holdTheCondition)
                                 {
+                                    UIMethod.WinMessage();
                                     totalWinCounter++;
                                 }
+                                else { UIMethod.LossMessage(); }
                                 
                                 if (FetchQuestionAndAnswers.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
                                 {

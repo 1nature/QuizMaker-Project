@@ -18,27 +18,25 @@ namespace QuizMaker
             return answerX;
         }
 
-        public static int RemoveText(string getAnswer, QuestionandAnswer removeText, List<QuestionandAnswer> removeFetched)
-        {
-            int holdTheCounter = LogicMethod.CheckCorrectAnswer(getAnswer, removeText.CorrectAnswerText);
+        public static bool RemoveText(string getAnswer, QuestionandAnswer removeText, List<QuestionandAnswer> removeFetched)
+        {          
+            bool forChecks = CheckCorrectAnswer(getAnswer, removeText.CorrectAnswerText);
             removeFetched.Remove(removeText);
-            return holdTheCounter;
+            return forChecks;
         }
 
-        public static int CheckCorrectAnswer(string theAnswer, string correctAnswer)
+        public static bool CheckCorrectAnswer(string theAnswer, string correctAnswer)
         {
-            int totalCounter = 0;
+            bool forChecks = true;
             if (theAnswer != correctAnswer)
             {
-                totalCounter = Constant.QUIZ_DECISION_NO;
-                UIMethod.LossMessage();
+                forChecks = false;
             }
             else
             {
-                totalCounter = Constant.QUIZ_DECISION_YES;
-                UIMethod.WinMessage();
+                forChecks = true;
             }
-            return totalCounter;
+            return forChecks;
         }
 
         public static void TakeAnswerOption(int optionTotal, string theOption, List<string> optionInput)
@@ -83,7 +81,7 @@ namespace QuizMaker
                 storageList.Add(newQna);
                 questionDecrement--;
             }
-            LogicMethod.SerializeData(storageList);
+            SerializeData(storageList);
             return questionDecrement;
         }
 

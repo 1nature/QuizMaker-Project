@@ -12,5 +12,7 @@
         public const char QUIZ_TYPE_ANSWERONLY = 'C';
         public const char LINE_TYPE_DIA = 'D';
         public const string THE_XML_PATH = @"QuestionList.xml";
+        public const bool CHECK_TRUE = true;
+        public const bool CHECK_FALSE = false;
     }
 }
