@@ -1,9 +1,21 @@
-﻿using static QuizMaker.QuestionandAnswer;
-
-namespace QuizMaker
+﻿namespace QuizMaker
 {
     public static class UIMethod
     {
+        public static int GetUserInputandCreateNewQuestionsandAnswers(List<QuestionandAnswer> storageList)
+        {
+            int numberOfQuizzerQuestions = GetIntFromUser("Input the number of questions you want to store: \n");
+            int questionDecrement = numberOfQuizzerQuestions;
+
+            for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
+            {
+                QuestionandAnswer newQna = GetQuestionandAnswerObjectFromUser();
+                storageList.Add(newQna);
+                questionDecrement--;
+            }
+            LogicMethod.SerializeData(storageList);
+            return questionDecrement;
+        }
 
         public static QuestionandAnswer DisplayQuestionAndAnswersToUser(QuestionandAnswer randomlySelectedQuestion, int countAnswer)
         {

@@ -1,5 +1,4 @@
 ﻿using System.Xml.Serialization;
-using static QuizMaker.QuestionandAnswer;
 
 namespace QuizMaker
 {
@@ -68,21 +67,6 @@ namespace QuizMaker
                 storedList = theVariable.Deserialize(file) as List<QuestionandAnswer>;
             }
             return storedList;
-        }
-
-        public static int CheckConditionOne(List<QuestionandAnswer> storageList)
-        {
-            int numberOfQuizzerQuestions = UIMethod.GetIntFromUser("Input the number of questions you want to store: \n");
-            int questionDecrement = numberOfQuizzerQuestions;
-
-            for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
-            {
-                QuestionandAnswer newQna = UIMethod.GetQuestionandAnswerObjectFromUser();
-                storageList.Add(newQna);
-                questionDecrement--;
-            }
-            SerializeData(storageList);
-            return questionDecrement;
         }
 
         public static bool CheckQuizConditionThree(char select, int winKounter, int maxCounter)

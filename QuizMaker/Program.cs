@@ -1,5 +1,4 @@
-﻿using static QuizMaker.QuestionandAnswer;
-namespace QuizMaker
+﻿namespace QuizMaker
 {
     internal class Program
     {
@@ -29,7 +28,7 @@ namespace QuizMaker
                 {
                     if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_STOREONLY)
                     {
-                        int theDecrement = LogicMethod.CheckConditionOne(QuestionList);
+                        int theDecrement = UIMethod.GetUserInputandCreateNewQuestionsandAnswers(QuestionList);
 
                         if (quizSelection == Constant.QUIZ_TYPE_STOREONLY && theDecrement < Constant.MINIMUM_NUMBER_OF_QUESTION)
                         {
@@ -118,7 +117,7 @@ namespace QuizMaker
                 while (!continueStoringQuestion)
                 {
                     UIMethod.DisplayQuitMessage();
-                    break; //
+                    break; 
                 }
             }
         }
