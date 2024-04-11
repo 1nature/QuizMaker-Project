@@ -20,7 +20,7 @@
             {
                 UIMethod.ShowQuizGameInstruction();
                 quizSelection = UIMethod.GetQuizLineResponse();
-                int questionInputCounter = 0;
+                //int questionInputCounter = 0;
                 int countAnsweredQuestions = 0;
                 string quizAnswerOptions = "";
 
@@ -84,8 +84,8 @@
                                 
                                 if (FetchQuestionAndAnswers.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
                                 {
-                                    int noCount = Constant.QUIZ_DECISION_NO;
-                                    questionInputCounter = noCount;
+                                    //int noCount = Constant.QUIZ_DECISION_NO;
+                                    //questionInputCounter = noCount;
                                     break;
                                 }
 
