@@ -4,6 +4,112 @@ namespace QuizMaker
 {
     public static class LogicMethod
     {
+        public static char CheckRestartStoreCondition(bool condition, char theInput)
+        {
+            if (condition && theInput == Constant.QUIZ_TYPE_STOREONLY)
+            {
+                theInput = UIMethod.GetQuizLineResponse();
+            }
+            return theInput;
+        }
+
+        public static char CheckRestartAnsweringCondition(bool restartVariable, char userReply)
+        {
+            if (restartVariable)
+            {
+                userReply = UIMethod.GetQuizLineResponse();
+            }
+            return userReply;
+        }
+
+        public static bool PerformAnswerOption(Random randQuestion)
+        {
+            bool answerMoreQuestions = true;
+            bool showScoreCondition = true;
+            int numOfDisplayedQuestions = 0;
+            int numOfAnsweredQuestions = 0;
+            List<QuestionandAnswer> fetchStoredQuestions = ReadQuizFromXml();
+            int remainderQuestion = fetchStoredQuestions.Count;
+            int incrementOperator = 0;
+
+            while (answerMoreQuestions)
+            {
+                numOfDisplayedQuestions++;
+                if (fetchStoredQuestions.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
+                {
+                    //UIMethod.PrintNoMoreQuestionMessage();
+                    break;
+                }
+                else
+                {
+                    QuestionandAnswer chosenQuestion = FetchRandomQuestion(fetchStoredQuestions, randQuestion);
+                    QuestionandAnswer retrievedText = UIMethod.DisplayQuestionAndAnswersToUser(chosenQuestion, numOfDisplayedQuestions);
+                    string userResponse = UIMethod.TakeUserAnswer();
+                    numOfAnsweredQuestions++;
+                    bool holdTheCondition = RemoveQuestionFromList(userResponse, retrievedText, fetchStoredQuestions);
+                    remainderQuestion--;
+                    int correctAnswerCounter = UIMethod.DisplayWinOrLossMessageAndExit(holdTheCondition);
+                    incrementOperator += correctAnswerCounter;
+                    showScoreCondition = UIMethod.ShowScoreForRestartOrQuit(remainderQuestion, incrementOperator, numOfAnsweredQuestions);
+                }
+            }
+            return showScoreCondition;
+        }
+
+        public static bool RemoveQuestionFromList(string getAnswer, QuestionandAnswer removeText, List<QuestionandAnswer> removeFetched)
+        {
+            bool compareAnswer = CheckCorrectAnswer(getAnswer, removeText.CorrectAnswerText);
+            removeFetched.Remove(removeText); 
+            return compareAnswer;
+        }
+
+        public static bool CheckCorrectAnswer(string theAnswer, string correctAnswer)
+        {
+            bool forChecksValue = true;
+            if (theAnswer != correctAnswer)
+            {
+                forChecksValue = false;
+            }
+            else
+            {
+                forChecksValue = true;
+            }
+            return forChecksValue;
+        }
+
+        public static bool ExitAnswerOption(int exitVariable)
+        {
+            bool exitCondition = true;
+            if (exitVariable < Constant.MINIMUM_NUMBER_OF_QUESTION)
+            {
+                exitCondition = false;
+            }
+            return exitCondition;
+        }
+
+        public static bool StopStoringQuestion(char userAnswer, List<QuestionandAnswer> questionStorage, bool restartStoring, int totalQuestion)
+        {
+            if (userAnswer == Constant.QUIZ_TYPE_STOREONLY)
+            {
+                if (questionStorage.Count == totalQuestion)
+                {
+                    UIMethod.ShowCompletedQuestionMessage();
+                    restartStoring = UIMethod.RestartQuiz();
+                    if (!restartStoring)
+                    {
+                        UIMethod.DisplayQuitMessage();
+                        restartStoring = false;
+                    }
+                    else
+                    {
+                        UIMethod.ShowQuizGameInstruction();
+                    }
+                }
+            }
+            return restartStoring;
+
+        }
+
         public static XmlSerializer DeclareXmlProperty()
         {
             XmlSerializer theWriter = new XmlSerializer(typeof(List<QuestionandAnswer>));
@@ -13,29 +119,8 @@ namespace QuizMaker
         public static QuestionandAnswer FetchRandomQuestion(List<QuestionandAnswer> randomQuestionList, Random randomQuest)
         {
             int indexOfRandomQuest = randomQuest.Next(randomQuestionList.Count);
-            QuestionandAnswer answerX = randomQuestionList[indexOfRandomQuest];
-            return answerX;
-        }
-
-        public static bool RemoveQuestionFromList(string getAnswer, QuestionandAnswer removeText, List<QuestionandAnswer> removeFetched)
-        {          
-            bool forChecks = CheckCorrectAnswer(getAnswer, removeText.CorrectAnswerText);
-            removeFetched.Remove(removeText);
-            return forChecks;
-        }
-
-        public static bool CheckCorrectAnswer(string theAnswer, string correctAnswer)
-        {
-            bool forChecks = true;
-            if (theAnswer != correctAnswer)
-            {
-                forChecks = false;
-            }
-            else
-            {
-                forChecks = true;
-            }
-            return forChecks;
+            QuestionandAnswer returnedQuestion = randomQuestionList[indexOfRandomQuest];
+            return returnedQuestion;
         }
 
         public static void TakeAnswerOption(int optionTotal, string theOption, List<string> optionInput)
@@ -67,27 +152,6 @@ namespace QuizMaker
                 storedList = theVariable.Deserialize(file) as List<QuestionandAnswer>;
             }
             return storedList;
-        }
-
-        public static bool CheckQuizConditionThree(char select, int winKounter, int maxCounter)
-        {
-            int parseCounter = winKounter;
-            UIMethod.PrintNoMoreQuestionMessage();
-            UIMethod.ShowWinningScore(winKounter, maxCounter);
-            bool keepPlay = UIMethod.RestartQuiz();
-            char newSelect = UIMethod.RepeatPlay(keepPlay, select, parseCounter, maxCounter);
-            select = newSelect;
-            return keepPlay;
-        }
-
-        public static int RestartQuestionNumber(bool restartCondition)
-        {
-            int answerCount = 0;
-            if (restartCondition)
-            {
-                answerCount = 0;
-            }
-            return answerCount;
         }
     }
 }

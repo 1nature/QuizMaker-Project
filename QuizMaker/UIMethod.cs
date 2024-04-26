@@ -2,64 +2,19 @@
 {
     public static class UIMethod
     {
-        public static int GetUserInputandCreateNewQuestionsandAnswers(List<QuestionandAnswer> storageList)
+        public static int DisplayWinOrLossMessageAndExit(bool theCondition)
         {
-            int numberOfQuizzerQuestions = GetIntFromUser("Input the number of questions you want to store: \n");
-            int questionDecrement = numberOfQuizzerQuestions;
-
-            for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
+            int winCounter = 0;
+            if (theCondition)
             {
-                QuestionandAnswer newQna = GetQuestionandAnswerObjectFromUser();
-                storageList.Add(newQna);
-                questionDecrement--;
+                winCounter++;
+                Console.WriteLine("Correct answer. You have a score\n");
             }
-            LogicMethod.SerializeData(storageList);
-            return questionDecrement;
-        }
-
-        public static QuestionandAnswer DisplayQuestionAndAnswersToUser(QuestionandAnswer randomlySelectedQuestion, int countAnswer)
-        {
-            PrintQuestionToUser(countAnswer, randomlySelectedQuestion.QuestionText);
-            PrintRandomQuestion(randomlySelectedQuestion.ListofQuestionandAnswers);
-            PrintAnswerInputInstruction();
-            return randomlySelectedQuestion;
-        }
-        
-        public static QuestionandAnswer GetQuestionandAnswerObjectFromUser()
-        {
-            var EachQuestionInput = new QuestionandAnswer(); //
-            string quizAnswerOptions = "";
-                        
-            EachQuestionInput.QuestionText = TakeUserQuestion();
-            int maximumOptions = GetIntFromUser("Input the number of options to your question?\n");
-            LogicMethod.TakeAnswerOption(maximumOptions, quizAnswerOptions, EachQuestionInput.ListofQuestionandAnswers);
-            EachQuestionInput.CorrectAnswerText = AddCorrectOption();
-            return EachQuestionInput;
-        }
-
-        public static void QuizWelcomeMessage()
-        {
-            Console.WriteLine("Welcome!\n");
-            Console.WriteLine("You can store your own questions to this quiz game");
-            Console.WriteLine("Also, you can answer stored questions in the quiz game\n");
-        }
-
-        public static void DisplayQuitMessage()
-        {
-            Console.WriteLine("You have decided not to play the quiz game.");
-        }
-
-        public static bool RestartQuiz()
-        {
-            Console.WriteLine("Enter '1' to restart the quiz, or '0' to quit.\n");
-            int restart;
-            do
+            else
             {
-                restart = int.Parse(Console.ReadLine());
-                if (restart != Constant.QUIZ_DECISION_YES && restart != Constant.QUIZ_DECISION_NO)
-                    Console.WriteLine("Not a valid input. Please try again");
-            } while (restart != 1 && restart != 0);
-            return (restart == Constant.QUIZ_DECISION_YES);
+                Console.WriteLine("Incorrect answer. You have no score\n");
+            }
+            return winCounter;
         }
 
         public static void ShowQuizGameInstruction()
@@ -70,17 +25,102 @@
             Console.WriteLine("If you want to answer questions only, enter 'C'\n");
         }
 
-        public static bool StoreQuestion()
+        public static void QuizWelcomeMessage()
         {
-            Console.WriteLine("Enter '1' to store and/or answer question(s), or '0' to quit.\n");
-            int makeQuizDecision;
+            Console.WriteLine("Welcome!\n");
+            Console.WriteLine("You can store your own questions to this quiz game");
+            Console.WriteLine("Also, you can answer stored questions in the quiz game\n");
+        }
+
+        public static char GetQuizLineResponse()
+        {
+            char quizLineChoice;
             do
             {
-                makeQuizDecision = int.Parse(Console.ReadLine());
-                if (makeQuizDecision != Constant.QUIZ_DECISION_YES && makeQuizDecision != Constant.QUIZ_DECISION_NO)
+                quizLineChoice = char.Parse(Console.ReadLine());
+                quizLineChoice = char.ToUpper(quizLineChoice);
+
+                if (quizLineChoice != Constant.QUIZ_TYPE_STOREANDANSWER && quizLineChoice != Constant.QUIZ_TYPE_STOREONLY && quizLineChoice != Constant.QUIZ_TYPE_ANSWERONLY)
                     Console.WriteLine("Not a valid input. Please try again");
-            } while (makeQuizDecision != Constant.QUIZ_DECISION_YES && makeQuizDecision != Constant.QUIZ_DECISION_NO);
-            return (makeQuizDecision == Constant.QUIZ_DECISION_YES);
+
+            } while (quizLineChoice != Constant.QUIZ_TYPE_STOREANDANSWER && quizLineChoice != Constant.QUIZ_TYPE_STOREONLY && quizLineChoice != Constant.QUIZ_TYPE_ANSWERONLY);
+            return quizLineChoice;
+        }
+        public static bool RestartQuizMaker()
+        {
+            Console.WriteLine("*********************************************");
+            Console.WriteLine("Enter '1' to restart the quizmaker, or '0' to quit.");
+            int newQuestion;
+            do
+            {
+                newQuestion = int.Parse(Console.ReadLine());
+                if (newQuestion != Constant.QUIZ_DECISION_YES && newQuestion != Constant.QUIZ_DECISION_NO)
+                    Console.WriteLine("Not a valid input. Please try again");
+
+            } while (newQuestion != Constant.QUIZ_DECISION_YES && newQuestion != Constant.QUIZ_DECISION_NO);
+            return (newQuestion == Constant.QUIZ_DECISION_YES);
+        }
+
+        public static bool ExitAnswerOption(int exitVariable)
+        {
+            bool exitCondition = true;
+            if (exitVariable < Constant.MINIMUM_NUMBER_OF_QUESTION)
+            {
+                exitCondition = false;
+            }
+            return exitCondition;
+        }
+
+        public static bool ShowScoreForRestartOrQuit(int exitVariable, int currentScore, int maxScore) 
+        {
+            bool exitCondition = true;
+            if (exitVariable < Constant.MINIMUM_NUMBER_OF_QUESTION)
+            {
+                bool restartVariable = RestartQuizMaker();
+                if (restartVariable)
+                {
+                    exitCondition = restartVariable;
+                    Console.WriteLine("***********YOUR SCORE**************");
+                    decimal theResult = (decimal)currentScore / maxScore * 100; //Use a method here cos of duplication
+                    Console.WriteLine($"You scored {currentScore} question(s) out of {maxScore} OR {theResult}%\n");
+                    UIMethod.ShowQuizGameInstruction();
+                }
+                else
+                {
+                    DisplayQuitMessage();
+                    Console.WriteLine("***********YOUR SCORE**************");
+                    decimal theResult = (decimal)currentScore / maxScore * 100;
+                    Console.WriteLine($"You scored {currentScore} question(s) out of {maxScore} OR {theResult}%\n");
+                    exitCondition = false;
+                }
+            }
+            return exitCondition;
+        }
+
+        public static bool StoreQuestion()
+        {
+            int numberInput;
+            bool checkInput = true;
+            bool isInteger;
+
+            while (checkInput)
+            {
+                Console.WriteLine("Enter '1' to store and/or answer question(s), or '0' to quit.\n");
+                do
+                {
+                    isInteger = int.TryParse(Console.ReadLine(), out numberInput);
+                    if (!isInteger)
+                    {
+                        Console.WriteLine("Wrong input. Please try again");
+                    }
+                } while (!isInteger);
+
+                if (numberInput == Constant.QUIZ_DECISION_YES || numberInput == Constant.QUIZ_DECISION_NO)
+                {
+                    break;
+                }
+            }
+            return checkInput;
         }
 
         public static int GetIntFromUser(string promt)
@@ -104,29 +144,69 @@
             return number;
         }
 
-        public static char GetQuizLineResponse()
+        public static QuestionandAnswer GetQuestionandAnswerObjectFromUser()
         {
-            char quizLineChoice;
+            var EachQuestionInput = new QuestionandAnswer(); //
+            string quizAnswerOptions = "";
+
+            EachQuestionInput.QuestionText = TakeUserQuestion();
+            int maximumOptions = GetIntFromUser("Input the number of options to your question?\n");
+            LogicMethod.TakeAnswerOption(maximumOptions, quizAnswerOptions, EachQuestionInput.ListofQuestionandAnswers);
+            EachQuestionInput.CorrectAnswerText = AddCorrectOption();
+            return EachQuestionInput;
+        }
+
+        public static int FetchQuestionsAndDisplayInstruction(char answerOption)
+        {
+            var getQuestions = new List<QuestionandAnswer>();
+            if (answerOption == Constant.QUIZ_TYPE_ANSWERONLY || answerOption == Constant.QUIZ_TYPE_STOREANDANSWER)
+            {
+                getQuestions = LogicMethod.ReadQuizFromXml();
+                DisplayUserInstruction(getQuestions.Count);
+            }
+            return getQuestions.Count;
+        }
+
+        public static int GetUserInputandCreateNewQuestionsandAnswers(List<QuestionandAnswer> storageList)
+        {
+            int numberOfQuizzerQuestions = 0;
+            numberOfQuizzerQuestions = GetIntFromUser("Input the number of questions you want to store: \n");
+            int questionDecrement = numberOfQuizzerQuestions;
+            for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
+            {
+                QuestionandAnswer newQna = GetQuestionandAnswerObjectFromUser();
+                storageList.Add(newQna);
+                questionDecrement--;
+            }
+            LogicMethod.SerializeData(storageList);
+            return numberOfQuizzerQuestions;
+        }
+
+        public static QuestionandAnswer DisplayQuestionAndAnswersToUser(QuestionandAnswer randomlySelectedQuestion, int countAnswer)
+        {
+            PrintQuestionToUser(countAnswer, randomlySelectedQuestion.QuestionText);
+            PrintRandomQuestion(randomlySelectedQuestion.ListofQuestionandAnswers);
+            PrintAnswerInputInstruction();
+            return randomlySelectedQuestion;
+        }
+
+        public static void DisplayQuitMessage()
+        {
+            Console.WriteLine("You have decided to quit the quizmaker.\n");
+        }
+
+
+        public static bool RestartQuiz()
+        {
+            Console.WriteLine("Enter '1' to restart the quiz, or '0' to quit.\n");
+            int restart;
             do
             {
-                quizLineChoice = char.Parse(Console.ReadLine());
-                quizLineChoice = char.ToUpper(quizLineChoice);
-
-                if (quizLineChoice != Constant.QUIZ_TYPE_STOREANDANSWER && quizLineChoice != Constant.QUIZ_TYPE_STOREONLY && quizLineChoice != Constant.QUIZ_TYPE_ANSWERONLY)
+                restart = int.Parse(Console.ReadLine());
+                if (restart != Constant.QUIZ_DECISION_YES && restart != Constant.QUIZ_DECISION_NO)
                     Console.WriteLine("Not a valid input. Please try again");
-
-            } while (quizLineChoice != Constant.QUIZ_TYPE_STOREANDANSWER && quizLineChoice != Constant.QUIZ_TYPE_STOREONLY && quizLineChoice != Constant.QUIZ_TYPE_ANSWERONLY);
-            return quizLineChoice;
-        }
-
-        public static void PrintWinMessage()
-        {
-            Console.WriteLine("Correct answer. You have a score\n");
-        }
-
-        public static void PrintLossMessage()
-        {
-            Console.WriteLine("Incorrect answer. You have no score\n");
+            } while (restart != 1 && restart != 0);
+            return (restart == Constant.QUIZ_DECISION_YES);
         }
 
         public static void PrintNoMoreQuestionMessage()
@@ -144,35 +224,6 @@
         public static void ShowOptionsMessage()
         {
             Console.WriteLine("Input your options one after the other. One of them must be the correct answer\n");
-        }
-        public static bool AnswerAnotherQuestion()
-        {
-            Console.WriteLine("*********************************************");
-            Console.WriteLine("Enter '1' to answer another question, or '0' to quit the game.");
-            int newQuestion = int.Parse(Console.ReadLine());
-            return (newQuestion == Constant.QUIZ_DECISION_YES);
-        }
-
-        public static void ShowWinningScore(int currentScore, int maxScore)
-        {
-            Console.WriteLine("***********YOUR SCORE**************");
-            decimal theResult = (decimal)currentScore / maxScore * 100;
-            Console.WriteLine($"You scored {currentScore} question(s) out of {maxScore} OR {theResult}%\n");
-        }
-
-        public static void CalculateWinningScore(bool questionProxy, bool answerProxy, int currentScore, int maxScore)
-        {
-            int result = 0;
-
-            if (questionProxy)
-            {
-                answerProxy = true;
-            }
-            else
-            {
-                answerProxy = false;
-                ShowWinningScore(currentScore, maxScore);
-            }
         }
 
         public static string AddTheOption()
@@ -231,21 +282,5 @@
         {
             Console.WriteLine($"Question {questionPosition}: {mainQuestion}");
         }
-
-        public static char RepeatPlay(bool keepPlayingProxy, char quizSelectionProxy, int winProxy, int answerProxy)
-        {
-            if (keepPlayingProxy)
-            {
-                ShowQuizGameInstruction();
-                quizSelectionProxy = GetQuizLineResponse();
-            }
-            else
-            {
-                keepPlayingProxy = false;
-                DisplayQuitMessage();
-            }
-            return quizSelectionProxy;
-        }
-
     }
 }

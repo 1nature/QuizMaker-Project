@@ -8,8 +8,6 @@
             bool keepPlayingQuiz = true;
             char quizSelection;
             var randomQuestion = new Random();
-            int totalWinCounter = 0;
-            int totalAnswerCounter = 0;
             var QuestionList = new List<QuestionandAnswer>();
             var MyList = new List<QuestionandAnswer>();
             var FetchQuestionAndAnswers = new List<QuestionandAnswer>();
@@ -20,104 +18,29 @@
             {
                 UIMethod.ShowQuizGameInstruction();
                 quizSelection = UIMethod.GetQuizLineResponse();
-                //int questionInputCounter = 0;
-                int countAnsweredQuestions = 0;
-                string quizAnswerOptions = "";
+                int numOfStoredQuestion = 0; 
+                bool keepStoringQuestion;
 
                 while (keepPlayingQuiz)
                 {
                     if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_STOREONLY)
                     {
-                        int theDecrement = UIMethod.GetUserInputandCreateNewQuestionsandAnswers(QuestionList);
-
-                        if (quizSelection == Constant.QUIZ_TYPE_STOREONLY && theDecrement < Constant.MINIMUM_NUMBER_OF_QUESTION)
-                        {
-                            UIMethod.ShowCompletedQuestionMessage();
-                            keepPlayingQuiz = UIMethod.RestartQuiz(); 
-                            if (!keepPlayingQuiz)
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                UIMethod.ShowQuizGameInstruction();
-                                quizSelection = UIMethod.GetQuizLineResponse();
-                                if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
-                                {
-                                    continue;
-                                }
-                            }
-                        }
-
+                        numOfStoredQuestion = UIMethod.GetUserInputandCreateNewQuestionsandAnswers(QuestionList);
+                        keepStoringQuestion = LogicMethod.StopStoringQuestion(quizSelection, QuestionList, keepPlayingQuiz, numOfStoredQuestion);
+                        keepPlayingQuiz = keepStoringQuestion;
+                        quizSelection = LogicMethod.CheckRestartStoreCondition(keepPlayingQuiz, quizSelection);
+                        //0 to quit has no message or nothing. It just quits like that.
                     }
-                    Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); //for checks
+
+                    //Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); // for checks
 
                     if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
                     {
-                        FetchQuestionAndAnswers = LogicMethod.ReadQuizFromXml();
-                        UIMethod.DisplayUserInstruction(FetchQuestionAndAnswers.Count);
-
-                        bool answerMoreQuestion = true;
-                        while (answerMoreQuestion)
-                        {
-                            countAnsweredQuestions++;
-                            if (FetchQuestionAndAnswers.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
-                            {
-                                UIMethod.PrintNoMoreQuestionMessage();
-                                break;
-                            }
-
-                            else
-                            {
-                                QuestionandAnswer theSelected = LogicMethod.FetchRandomQuestion(FetchQuestionAndAnswers, randomQuestion);
-                                QuestionandAnswer retrievedText = UIMethod.DisplayQuestionAndAnswersToUser(theSelected, countAnsweredQuestions);
-                                string userAnswer = UIMethod.TakeUserAnswer();
-                                totalAnswerCounter++;                                
-                                bool holdTheCondition = LogicMethod.RemoveQuestionFromList(userAnswer, retrievedText, FetchQuestionAndAnswers);
-                                
-                                if (holdTheCondition)
-                                {
-                                    UIMethod.PrintWinMessage();
-                                    totalWinCounter++;
-                                }
-                                else { UIMethod.PrintLossMessage(); }
-                                
-                                if (FetchQuestionAndAnswers.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
-                                {
-                                    //int noCount = Constant.QUIZ_DECISION_NO;
-                                    //questionInputCounter = noCount;
-                                    break;
-                                }
-
-                                bool moreQuestion = UIMethod.AnswerAnotherQuestion();
-                                if (!moreQuestion)
-                                {
-                                    break;
-                                }
-                                else
-                                {
-                                    UIMethod.CalculateWinningScore(moreQuestion, answerMoreQuestion, totalWinCounter, totalAnswerCounter);
-                                }
-
-                            }
-                        }
+                        int numOfAvailableQuestion = UIMethod.FetchQuestionsAndDisplayInstruction(quizSelection); 
+                        bool exitAnswerCondition = LogicMethod.PerformAnswerOption(randomQuestion);
+                        keepPlayingQuiz = exitAnswerCondition; 
+                        quizSelection = LogicMethod.CheckRestartAnsweringCondition(keepPlayingQuiz, quizSelection);
                     }
-
-                    if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
-                    {
-                        keepPlayingQuiz = LogicMethod.CheckQuizConditionThree(quizSelection, totalWinCounter, totalAnswerCounter);
-                        countAnsweredQuestions = LogicMethod.RestartQuestionNumber(keepPlayingQuiz);
-                    }
-
-                } 
-            }
-            else
-            {
-                continueStoringQuestion = false;
-                while (!continueStoringQuestion)
-                {
-                    UIMethod.DisplayQuitMessage();
-                    break; 
                 }
             }
         }

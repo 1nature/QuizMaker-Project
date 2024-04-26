@@ -14,5 +14,6 @@
         public const string THE_XML_PATH = @"QuestionList.xml";
         public const bool CHECK_TRUE = true;
         public const bool CHECK_FALSE = false;
+        public const int BREAK_OPERATION = -1;
     }
 }
