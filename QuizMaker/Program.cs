@@ -15,7 +15,6 @@
                 UIMethod.ShowQuizGameInstruction();
                 quizSelection = UIMethod.GetQuizLineResponse();
                 int numOfStoredQuestion = 0; 
-                bool keepStoringQuestion;
                 var QuestionList = new List<QuestionandAnswer>();
                 bool keepPlayingQuiz = true;
 
@@ -25,14 +24,12 @@
                     if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_STOREONLY)
                     {
                         numOfStoredQuestion = UIMethod.GetUserInputandCreateNewQuestionsandAnswers(QuestionList);
-                        keepStoringQuestion = LogicMethod.StopStoringQuestion(quizSelection, QuestionList, keepPlayingQuiz, numOfStoredQuestion);
-                        keepPlayingQuiz = keepStoringQuestion;
+                        keepPlayingQuiz = LogicMethod.StopStoringQuestion(quizSelection, QuestionList, keepPlayingQuiz, numOfStoredQuestion);
                         quizSelection = LogicMethod.CheckRestartStoreCondition(keepPlayingQuiz, quizSelection);
                         //0 to quit has no message or nothing. It just quits like that.
                     }
 
                     //Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); // for checks
-
                     if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
                     {
                         int numOfAvailableQuestion = UIMethod.FetchQuestionsAndDisplayInstruction(quizSelection); 

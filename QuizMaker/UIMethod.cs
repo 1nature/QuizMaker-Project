@@ -169,7 +169,7 @@
 
         public static int GetUserInputandCreateNewQuestionsandAnswers(List<QuestionandAnswer> storageList)
         {
-            int numberOfQuizzerQuestions = 0;
+            int numberOfQuizzerQuestions;
             numberOfQuizzerQuestions = GetIntFromUser("Input the number of questions you want to store: \n");
             int questionDecrement = numberOfQuizzerQuestions;
             for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
