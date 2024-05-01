@@ -13,7 +13,7 @@
             var FetchQuestionAndAnswers = new List<QuestionandAnswer>();
 
             UIMethod.QuizWelcomeMessage();
-            continueStoringQuestion = UIMethod.StoreQuestion();
+            continueStoringQuestion = UIMethod.GetUserPlayOrQuitInput();
             if (continueStoringQuestion)
             {
                 UIMethod.ShowQuizGameInstruction();

@@ -97,7 +97,7 @@
             return exitCondition;
         }
 
-        public static bool StoreQuestion()
+        public static bool GetUserPlayOrQuitInput()
         {
             int numberInput;
             bool checkInput = true;
