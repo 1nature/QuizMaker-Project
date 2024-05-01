@@ -5,10 +5,8 @@
         static void Main(string[] args)
         {
             bool continueStoringQuestion = true;
-            bool keepPlayingQuiz = true;
             char quizSelection;
             var randomQuestion = new Random();
-            var QuestionList = new List<QuestionandAnswer>();
 
             UIMethod.QuizWelcomeMessage();
             continueStoringQuestion = UIMethod.GetUserPlayOrQuitInput();
@@ -18,6 +16,9 @@
                 quizSelection = UIMethod.GetQuizLineResponse();
                 int numOfStoredQuestion = 0; 
                 bool keepStoringQuestion;
+                var QuestionList = new List<QuestionandAnswer>();
+                bool keepPlayingQuiz = true;
+
 
                 while (keepPlayingQuiz)
                 {
