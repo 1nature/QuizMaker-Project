@@ -9,8 +9,6 @@
             char quizSelection;
             var randomQuestion = new Random();
             var QuestionList = new List<QuestionandAnswer>();
-            var MyList = new List<QuestionandAnswer>();
-            var FetchQuestionAndAnswers = new List<QuestionandAnswer>();
 
             UIMethod.QuizWelcomeMessage();
             continueStoringQuestion = UIMethod.GetUserPlayOrQuitInput();
