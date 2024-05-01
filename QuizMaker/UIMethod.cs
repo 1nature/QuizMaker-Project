@@ -20,9 +20,9 @@
         public static void ShowQuizGameInstruction()
         {
             Console.WriteLine("**************QUIZ INSTRUCTION*****************\n");
-            Console.WriteLine("If you want to store and answer questions, enter 'A'");
-            Console.WriteLine("If you want to store questions only, enter 'B'");
-            Console.WriteLine("If you want to answer questions only, enter 'C'\n");
+            Console.WriteLine($"If you want to store and answer questions, enter: {Constant.QUIZ_TYPE_STOREANDANSWER}");
+            Console.WriteLine($"If you want to store questions only, enter: {Constant.QUIZ_TYPE_STOREONLY}");
+            Console.WriteLine($"If you want to answer questions only, enter: {Constant.QUIZ_TYPE_ANSWERONLY}\n");
         }
 
         public static void QuizWelcomeMessage()
