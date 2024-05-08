@@ -97,6 +97,31 @@
             return exitCondition;
         }
 
+        //public static bool GetUserPlayOrQuitInput()
+        //{
+        //    int numberInput;
+        //    bool checkInput = true;
+        //    bool isInteger;
+
+        //    while (checkInput)
+        //    {
+        //        Console.WriteLine("Enter '1' to store and/or answer question(s), or '0' to quit.\n");
+        //        do
+        //        {
+        //            isInteger = int.TryParse(Console.ReadLine(), out numberInput);
+        //            if (!isInteger)
+        //            {
+        //                Console.WriteLine("Wrong input. Please try again");
+        //            }
+        //        } while (!isInteger);
+
+        //        if (numberInput == Constant.QUIZ_DECISION_YES || numberInput == Constant.QUIZ_DECISION_NO)
+        //        {
+        //            break;
+        //        }
+        //    }
+        //    return checkInput;
+        //}
         public static bool GetUserPlayOrQuitInput()
         {
             int numberInput;
@@ -144,6 +169,27 @@
             return number;
         }
 
+        //public static int GetIntFromUser(string promt)
+        //{
+        //    bool valid = false;
+        //    int number = 0;
+        //    while (!valid)
+        //    {
+        //        Console.WriteLine(promt);
+        //        string theInput = Console.ReadLine() + "\n";
+
+        //        if (int.TryParse(theInput, out number))
+        //        {
+        //            valid = true;
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("Not a valid input, please try again");
+        //        }
+        //    }
+        //    return number;
+        //}
+
         public static QuestionandAnswer GetQuestionandAnswerObjectFromUser()
         {
             var EachQuestionInput = new QuestionandAnswer(); //
@@ -151,7 +197,7 @@
 
             EachQuestionInput.QuestionText = TakeUserQuestion();
             int maximumOptions = GetIntFromUser("Input the number of options to your question?\n");
-            LogicMethod.TakeAnswerOption(maximumOptions, quizAnswerOptions, EachQuestionInput.ListofQuestionandAnswers);
+            TakeAnswerOption(maximumOptions, quizAnswerOptions, EachQuestionInput.ListofQuestionandAnswers);
             EachQuestionInput.CorrectAnswerText = AddCorrectOption();
             return EachQuestionInput;
         }
@@ -281,6 +327,16 @@
         public static void PrintQuestionToUser(int questionPosition, string mainQuestion)
         {
             Console.WriteLine($"Question {questionPosition}: {mainQuestion}");
+        }
+
+        public static void TakeAnswerOption(int optionTotal, string theOption, List<string> optionInput)
+        {
+            UIMethod.ShowOptionsMessage();
+            for (int Index = 0; Index < optionTotal; Index++)
+            {
+                theOption = UIMethod.AddTheOption();
+                optionInput.Add(theOption);
+            }
         }
     }
 }

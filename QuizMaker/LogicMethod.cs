@@ -123,15 +123,15 @@ namespace QuizMaker
             return returnedQuestion;
         }
 
-        public static void TakeAnswerOption(int optionTotal, string theOption, List<string> optionInput)
-        {
-            UIMethod.ShowOptionsMessage();
-            for (int Index = 0; Index < optionTotal; Index++)
-            {
-                theOption = UIMethod.AddTheOption();
-                optionInput.Add(theOption);
-            }
-        }
+        //public static void TakeAnswerOption(int optionTotal, string theOption, List<string> optionInput)
+        //{
+        //    UIMethod.ShowOptionsMessage();
+        //    for (int Index = 0; Index < optionTotal; Index++)
+        //    {
+        //        theOption = UIMethod.AddTheOption();
+        //        optionInput.Add(theOption);
+        //    }
+        //}
 
         public static void SerializeData(List<QuestionandAnswer> serialList)
         {

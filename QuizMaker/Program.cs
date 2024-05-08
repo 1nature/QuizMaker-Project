@@ -34,7 +34,7 @@
                     {
                         int numOfAvailableQuestion = UIMethod.FetchQuestionsAndDisplayInstruction(quizSelection); 
                         bool exitAnswerCondition = LogicMethod.PerformAnswerOption(randomQuestion);
-                        keepPlayingQuiz = exitAnswerCondition; 
+                        keepPlayingQuiz = exitAnswerCondition; //some repetition here
                         quizSelection = LogicMethod.CheckRestartAnsweringCondition(keepPlayingQuiz, quizSelection);
                     }
                 }
