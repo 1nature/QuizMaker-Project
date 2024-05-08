@@ -32,7 +32,8 @@
                     //Console.WriteLine($"Number of questions stored: {QuestionList.Count}"); // for checks
                     if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_ANSWERONLY)
                     {
-                        int numOfAvailableQuestion = UIMethod.FetchQuestionsAndDisplayInstruction(quizSelection); 
+                        int numOfAvailableQuestions = LogicMethod.FetchQuestionsAndDisplayInstruction(quizSelection);
+                        UIMethod.DisplayUserInstruction(numOfAvailableQuestions);
                         bool exitAnswerCondition = LogicMethod.PerformAnswerOption(randomQuestion);
                         keepPlayingQuiz = exitAnswerCondition; //some repetition here
                         quizSelection = LogicMethod.CheckRestartAnsweringCondition(keepPlayingQuiz, quizSelection);

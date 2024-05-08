@@ -133,6 +133,18 @@ namespace QuizMaker
         //    }
         //}
 
+        public static int FetchQuestionsAndDisplayInstruction(char answerOption)
+        {
+            var getQuestions = new List<QuestionandAnswer>();
+            if (answerOption == Constant.QUIZ_TYPE_ANSWERONLY || answerOption == Constant.QUIZ_TYPE_STOREANDANSWER)
+            {
+                getQuestions = LogicMethod.ReadQuizFromXml();
+                //DisplayUserInstruction(getQuestions.Count);
+            }
+            return getQuestions.Count;
+        }
+
+
         public static void SerializeData(List<QuestionandAnswer> serialList)
         {
             XmlSerializer writer = DeclareXmlProperty();

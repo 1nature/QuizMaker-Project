@@ -71,7 +71,7 @@
             return exitCondition;
         }
 
-        public static bool ShowScoreForRestartOrQuit(int exitVariable, int currentScore, int maxScore) 
+        public static bool ShowScoreForRestartOrQuit(int exitVariable, int currentScore, int maxScore)
         {
             bool exitCondition = true;
             if (exitVariable < Constant.MINIMUM_NUMBER_OF_QUESTION)
@@ -202,15 +202,26 @@
             return EachQuestionInput;
         }
 
-        public static int FetchQuestionsAndDisplayInstruction(char answerOption)
+        //public static int FetchQuestionsAndDisplayInstruction(char answerOption)
+        //{
+        //    var getQuestions = new List<QuestionandAnswer>();
+        //    if (answerOption == Constant.QUIZ_TYPE_ANSWERONLY || answerOption == Constant.QUIZ_TYPE_STOREANDANSWER)
+        //    {
+        //        getQuestions = LogicMethod.ReadQuizFromXml();
+        //        //DisplayUserInstruction(getQuestions.Count);
+        //    }
+        //    return getQuestions.Count;
+        //}
+
+        public static void DisplayUserInstruction(int availableQuestions)
         {
-            var getQuestions = new List<QuestionandAnswer>();
-            if (answerOption == Constant.QUIZ_TYPE_ANSWERONLY || answerOption == Constant.QUIZ_TYPE_STOREANDANSWER)
+            if (availableQuestions >= Constant.MINIMUM_QUIZ_SCORE)
             {
-                getQuestions = LogicMethod.ReadQuizFromXml();
-                DisplayUserInstruction(getQuestions.Count);
+                Console.WriteLine($"There are {availableQuestions} questions available for you to answer\n");
+                Console.WriteLine("You would see the questions and their answer options below");
+                Console.WriteLine("Please select from the options shown to answer the question");
+                Console.WriteLine("You should type in your answer\n");
             }
-            return getQuestions.Count;
         }
 
         public static int GetUserInputandCreateNewQuestionsandAnswers(List<QuestionandAnswer> storageList)
@@ -295,13 +306,13 @@
             Console.WriteLine("You have exhausted the number of questions you chose to store");
         }
 
-        public static void DisplayUserInstruction(int availableQuestions)
-        {
-            Console.WriteLine($"There are {availableQuestions} questions available for you to answer\n");
-            Console.WriteLine("You would see the questions and their answer options below");
-            Console.WriteLine("Please select from the options shown to answer the question");
-            Console.WriteLine("You should type in your answer\n");
-        }
+        //public static void DisplayUserInstruction(int availableQuestions)
+        //{
+        //    Console.WriteLine($"There are {availableQuestions} questions available for you to answer\n");
+        //    Console.WriteLine("You would see the questions and their answer options below");
+        //    Console.WriteLine("Please select from the options shown to answer the question");
+        //    Console.WriteLine("You should type in your answer\n");
+        //}
 
         public static string TakeUserAnswer()
         {
