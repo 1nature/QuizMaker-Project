@@ -149,17 +149,21 @@ namespace QuizMaker
             }
         }
 
+
         public static List<QuestionandAnswer> ReadQuizFromXml()
         {
             //XmlSerializer theVariable = DeclareXmlProperty();
             XmlSerializer theVariable = new XmlSerializer(typeof(List<QuestionandAnswer>));
 
-            List<QuestionandAnswer> storedList;
+            List<QuestionandAnswer> storedList = null;
 
-            using (FileStream file = File.OpenRead(Constant.THE_XML_PATH))
+            if (File.Exists(Constant.THE_XML_PATH))
             {
-                storedList = theVariable.Deserialize(file) as List<QuestionandAnswer>;
-            }
+                using (FileStream file = File.OpenRead(Constant.THE_XML_PATH))
+                {
+                    storedList = theVariable.Deserialize(file) as List<QuestionandAnswer>;
+                }
+            }//maybe an else here should the opposite be the case?
             return storedList;
         }
     }
