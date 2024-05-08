@@ -110,12 +110,6 @@ namespace QuizMaker
 
         }
 
-        public static XmlSerializer DeclareXmlProperty()
-        {
-            XmlSerializer theWriter = new XmlSerializer(typeof(List<QuestionandAnswer>));
-            return theWriter;
-        }
-
         public static QuestionandAnswer FetchRandomQuestion(List<QuestionandAnswer> randomQuestionList, Random randomQuest)
         {
             int indexOfRandomQuest = randomQuest.Next(randomQuestionList.Count);
@@ -144,10 +138,11 @@ namespace QuizMaker
             return getQuestions.Count;
         }
 
-
         public static void SerializeData(List<QuestionandAnswer> serialList)
         {
-            XmlSerializer writer = DeclareXmlProperty();
+            //XmlSerializer writer = DeclareXmlProperty();
+            XmlSerializer writer = new XmlSerializer(typeof(List<QuestionandAnswer>));
+
             using (FileStream file = File.Create(Constant.THE_XML_PATH))
             {
                 writer.Serialize(file, serialList);
@@ -156,7 +151,9 @@ namespace QuizMaker
 
         public static List<QuestionandAnswer> ReadQuizFromXml()
         {
-            XmlSerializer theVariable = DeclareXmlProperty();
+            //XmlSerializer theVariable = DeclareXmlProperty();
+            XmlSerializer theVariable = new XmlSerializer(typeof(List<QuestionandAnswer>));
+
             List<QuestionandAnswer> storedList;
 
             using (FileStream file = File.OpenRead(Constant.THE_XML_PATH))
