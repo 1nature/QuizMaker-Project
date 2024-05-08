@@ -71,6 +71,29 @@
             return exitCondition;
         }
 
+        public static bool StopStoringQuestion(char userAnswer, List<QuestionandAnswer> questionStorage, bool restartStoring, int totalQuestion)
+        {
+            if (userAnswer == Constant.QUIZ_TYPE_STOREONLY)
+            {
+                if (questionStorage.Count == totalQuestion)
+                {
+                    UIMethod.ShowCompletedQuestionMessage();
+                    restartStoring = UIMethod.RestartQuiz();
+                    if (!restartStoring)
+                    {
+                        UIMethod.DisplayQuitMessage();
+                        restartStoring = false;
+                    }
+                    else
+                    {
+                        UIMethod.ShowQuizGameInstruction();
+                    }
+                }
+            }
+            return restartStoring;
+
+        }
+
         public static bool ShowScoreForRestartOrQuit(int exitVariable, int currentScore, int maxScore)
         {
             bool exitCondition = true;
@@ -193,15 +216,26 @@
         public static QuestionandAnswer GetQuestionandAnswerObjectFromUser()
         {
             var EachQuestionInput = new QuestionandAnswer(); //
-            string quizAnswerOptions = "";
+            //string quizAnswerOptions = "";
 
             EachQuestionInput.QuestionText = TakeUserQuestion();
             int maximumOptions = GetIntFromUser("Input the number of options to your question?\n");
-            TakeAnswerOption(maximumOptions, quizAnswerOptions, EachQuestionInput.ListofQuestionandAnswers);
+            TakeAnswerOption(maximumOptions, EachQuestionInput.ListofQuestionandAnswers);
             EachQuestionInput.CorrectAnswerText = AddCorrectOption();
             return EachQuestionInput;
         }
 
+        public static void TakeAnswerOption(int optionTotal, List<string> optionInput)//string theOption removed
+        {
+            ShowOptionsMessage();
+            for (int Index = 0; Index < optionTotal; Index++)
+            {
+                //theOption = UIMethod.AddTheOption();
+                //optionInput.Add(theOption);
+                optionInput.Add(AddTheOption());
+
+            }
+        }
         //public static int FetchQuestionsAndDisplayInstruction(char answerOption)
         //{
         //    var getQuestions = new List<QuestionandAnswer>();
@@ -340,14 +374,6 @@
             Console.WriteLine($"Question {questionPosition}: {mainQuestion}");
         }
 
-        public static void TakeAnswerOption(int optionTotal, string theOption, List<string> optionInput)
-        {
-            UIMethod.ShowOptionsMessage();
-            for (int Index = 0; Index < optionTotal; Index++)
-            {
-                theOption = UIMethod.AddTheOption();
-                optionInput.Add(theOption);
-            }
-        }
+        
     }
 }

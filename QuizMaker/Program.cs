@@ -24,7 +24,8 @@
                     if (quizSelection == Constant.QUIZ_TYPE_STOREANDANSWER || quizSelection == Constant.QUIZ_TYPE_STOREONLY)
                     {
                         numOfStoredQuestion = UIMethod.GetUserInputandCreateNewQuestionsandAnswers(QuestionList);
-                        keepPlayingQuiz = LogicMethod.StopStoringQuestion(quizSelection, QuestionList, keepPlayingQuiz, numOfStoredQuestion);
+                        keepPlayingQuiz = UIMethod.StopStoringQuestion(quizSelection, QuestionList, keepPlayingQuiz, numOfStoredQuestion);
+
                         quizSelection = LogicMethod.CheckRestartStoreCondition(keepPlayingQuiz, quizSelection);
                         //0 to quit has no message or nothing. It just quits like that.
                     }

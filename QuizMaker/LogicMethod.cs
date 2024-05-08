@@ -87,28 +87,28 @@ namespace QuizMaker
             return exitCondition;
         }
 
-        public static bool StopStoringQuestion(char userAnswer, List<QuestionandAnswer> questionStorage, bool restartStoring, int totalQuestion)
-        {
-            if (userAnswer == Constant.QUIZ_TYPE_STOREONLY)
-            {
-                if (questionStorage.Count == totalQuestion)
-                {
-                    UIMethod.ShowCompletedQuestionMessage();
-                    restartStoring = UIMethod.RestartQuiz();
-                    if (!restartStoring)
-                    {
-                        UIMethod.DisplayQuitMessage();
-                        restartStoring = false;
-                    }
-                    else
-                    {
-                        UIMethod.ShowQuizGameInstruction();
-                    }
-                }
-            }
-            return restartStoring;
+        //public static bool StopStoringQuestion(char userAnswer, List<QuestionandAnswer> questionStorage, bool restartStoring, int totalQuestion)
+        //{
+        //    if (userAnswer == Constant.QUIZ_TYPE_STOREONLY)
+        //    {
+        //        if (questionStorage.Count == totalQuestion)
+        //        {
+        //            UIMethod.ShowCompletedQuestionMessage();
+        //            restartStoring = UIMethod.RestartQuiz();
+        //            if (!restartStoring)
+        //            {
+        //                UIMethod.DisplayQuitMessage();
+        //                restartStoring = false;
+        //            }
+        //            else
+        //            {
+        //                UIMethod.ShowQuizGameInstruction();
+        //            }
+        //        }
+        //    }
+        //    return restartStoring;
 
-        }
+        //}
 
         public static QuestionandAnswer FetchRandomQuestion(List<QuestionandAnswer> randomQuestionList, Random randomQuest)
         {
