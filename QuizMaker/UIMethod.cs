@@ -46,6 +46,7 @@
             } while (quizLineChoice != Constant.QUIZ_TYPE_STOREANDANSWER && quizLineChoice != Constant.QUIZ_TYPE_STOREONLY && quizLineChoice != Constant.QUIZ_TYPE_ANSWERONLY);
             return quizLineChoice;
         }
+
         public static bool RestartQuizMaker()
         {
             Console.WriteLine("*********************************************");
@@ -59,16 +60,6 @@
 
             } while (newQuestion != Constant.QUIZ_DECISION_YES && newQuestion != Constant.QUIZ_DECISION_NO);
             return (newQuestion == Constant.QUIZ_DECISION_YES);
-        }
-
-        public static bool ExitAnswerOption(int exitVariable)
-        {
-            bool exitCondition = true;
-            if (exitVariable < Constant.MINIMUM_NUMBER_OF_QUESTION)
-            {
-                exitCondition = false;
-            }
-            return exitCondition;
         }
 
         public static bool StopStoringQuestion(char userAnswer, List<QuestionandAnswer> questionStorage, bool restartStoring, int totalQuestion)
@@ -91,7 +82,6 @@
                 }
             }
             return restartStoring;
-
         }
 
         public static bool ShowScoreForRestartOrQuit(int exitVariable, int currentScore, int maxScore)
@@ -120,132 +110,26 @@
             return exitCondition;
         }
 
-        //public static bool GetUserPlayOrQuitInput()
-        //{
-        //    int numberInput;
-        //    bool checkInput = true;
-        //    bool isInteger;
-
-        //    while (checkInput)
-        //    {
-        //        Console.WriteLine("Enter '1' to store and/or answer question(s), or '0' to quit.\n");
-        //        do
-        //        {
-        //            isInteger = int.TryParse(Console.ReadLine(), out numberInput);
-        //            if (!isInteger)
-        //            {
-        //                Console.WriteLine("Wrong input. Please try again");
-        //            }
-        //        } while (!isInteger);
-
-        //        if (numberInput == Constant.QUIZ_DECISION_YES || numberInput == Constant.QUIZ_DECISION_NO)
-        //        {
-        //            break;
-        //        }
-        //    }
-        //    return checkInput;
-        //}
-        public static bool GetUserPlayOrQuitInput()
-        {
-            int numberInput;
-            bool checkInput = true;
-            bool isInteger;
-
-            while (checkInput)
-            {
-                Console.WriteLine("Enter '1' to store and/or answer question(s), or '0' to quit.\n");
-                do
-                {
-                    isInteger = int.TryParse(Console.ReadLine(), out numberInput);
-                    if (!isInteger)
-                    {
-                        Console.WriteLine("Wrong input. Please try again");
-                    }
-                } while (!isInteger);
-
-                if (numberInput == Constant.QUIZ_DECISION_YES || numberInput == Constant.QUIZ_DECISION_NO)
-                {
-                    break;
-                }
-            }
-            return checkInput;
-        }
-
-        public static int GetIntFromUser(string promt)
-        {
-            bool valid = false;
-            int number = 0;
-            while (!valid)
-            {
-                Console.WriteLine(promt);
-                string theInput = Console.ReadLine() + "\n";
-
-                if (int.TryParse(theInput, out number))
-                {
-                    valid = true;
-                }
-                else
-                {
-                    Console.WriteLine("Not a valid input, please try again");
-                }
-            }
-            return number;
-        }
-
-        //public static int GetIntFromUser(string promt)
-        //{
-        //    bool valid = false;
-        //    int number = 0;
-        //    while (!valid)
-        //    {
-        //        Console.WriteLine(promt);
-        //        string theInput = Console.ReadLine() + "\n";
-
-        //        if (int.TryParse(theInput, out number))
-        //        {
-        //            valid = true;
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("Not a valid input, please try again");
-        //        }
-        //    }
-        //    return number;
-        //}
-
         public static QuestionandAnswer GetQuestionandAnswerObjectFromUser()
         {
-            var EachQuestionInput = new QuestionandAnswer(); //
-            //string quizAnswerOptions = "";
-
+            var EachQuestionInput = new QuestionandAnswer(); 
             EachQuestionInput.QuestionText = TakeUserQuestion();
-            int maximumOptions = GetIntFromUser("Input the number of options to your question?\n");
+            Console.WriteLine("Input the number of options to your question\n");
+            int maximumOptions = GetIntegerFromUser();
             TakeAnswerOption(maximumOptions, EachQuestionInput.ListofQuestionandAnswers);
             EachQuestionInput.CorrectAnswerText = AddCorrectOption();
             return EachQuestionInput;
         }
 
-        public static void TakeAnswerOption(int optionTotal, List<string> optionInput)//string theOption removed
+        public static void TakeAnswerOption(int optionTotal, List<string> optionInput)
         {
             ShowOptionsMessage();
             for (int Index = 0; Index < optionTotal; Index++)
             {
-                //theOption = UIMethod.AddTheOption();
-                //optionInput.Add(theOption);
                 optionInput.Add(AddTheOption());
 
             }
         }
-        //public static int FetchQuestionsAndDisplayInstruction(char answerOption)
-        //{
-        //    var getQuestions = new List<QuestionandAnswer>();
-        //    if (answerOption == Constant.QUIZ_TYPE_ANSWERONLY || answerOption == Constant.QUIZ_TYPE_STOREANDANSWER)
-        //    {
-        //        getQuestions = LogicMethod.ReadQuizFromXml();
-        //        //DisplayUserInstruction(getQuestions.Count);
-        //    }
-        //    return getQuestions.Count;
-        //}
 
         public static void DisplayUserInstruction(int availableQuestions)
         {
@@ -261,7 +145,8 @@
         public static int GetUserInputandCreateNewQuestionsandAnswers(List<QuestionandAnswer> storageList)
         {
             int numberOfQuizzerQuestions;
-            numberOfQuizzerQuestions = GetIntFromUser("Input the number of questions you want to store: \n");
+            Console.WriteLine("Input the number of questions you want to store: \n");
+            numberOfQuizzerQuestions = GetIntegerFromUser();
             int questionDecrement = numberOfQuizzerQuestions;
             for (int quizzerReplyIndex = 0; quizzerReplyIndex < numberOfQuizzerQuestions; quizzerReplyIndex++)
             {
@@ -286,7 +171,6 @@
             Console.WriteLine("You have decided to quit the quizmaker.\n");
         }
 
-
         public static bool RestartQuiz()
         {
             Console.WriteLine("Enter '1' to restart the quiz, or '0' to quit.\n");
@@ -298,11 +182,6 @@
                     Console.WriteLine("Not a valid input. Please try again");
             } while (restart != 1 && restart != 0);
             return (restart == Constant.QUIZ_DECISION_YES);
-        }
-
-        public static void PrintNoMoreQuestionMessage()
-        {
-            Console.WriteLine("There are no more questions left to answer\n");
         }
 
         public static string TakeUserQuestion()
@@ -340,14 +219,6 @@
             Console.WriteLine("You have exhausted the number of questions you chose to store");
         }
 
-        //public static void DisplayUserInstruction(int availableQuestions)
-        //{
-        //    Console.WriteLine($"There are {availableQuestions} questions available for you to answer\n");
-        //    Console.WriteLine("You would see the questions and their answer options below");
-        //    Console.WriteLine("Please select from the options shown to answer the question");
-        //    Console.WriteLine("You should type in your answer\n");
-        //}
-
         public static string TakeUserAnswer()
         {
             string theUserAnswer = Console.ReadLine().ToLower();
@@ -369,11 +240,54 @@
             Console.WriteLine("Type your answer below");
         }
 
+        public static void PrintIntegerInputInstructionToUser()
+        {
+            Console.WriteLine("Enter '1' to store and/or answer question(s), or '0' to quit. \n");
+        }
+
         public static void PrintQuestionToUser(int questionPosition, string mainQuestion)
         {
             Console.WriteLine($"Question {questionPosition}: {mainQuestion}");
         }
 
-        
+        public static int GetIntegerFromUser()
+        {
+            bool valid = false;
+            int number = 0;
+            while (!valid)
+            {
+                string theInput = Console.ReadLine() +"\n";
+                if (int.TryParse(theInput, out number))
+                {
+                    valid = true;
+                } else { Console.WriteLine("Not a valid input, Please try again"); }
+            }
+            return number;
+        }
+
+        public static void DisplayQuizLogic(bool playOn, char quizChoice)
+        {
+            int storedQuestions;
+            var ListOfQuestions = new List<QuestionandAnswer>();
+            var theRandomQuestion = new Random();
+
+            while (playOn) 
+            {
+                if (quizChoice == Constant.QUIZ_TYPE_STOREANDANSWER || quizChoice == Constant.QUIZ_TYPE_STOREONLY)
+                {
+                    storedQuestions = UIMethod.GetUserInputandCreateNewQuestionsandAnswers(ListOfQuestions);
+                    playOn = UIMethod.StopStoringQuestion(quizChoice, ListOfQuestions, playOn, storedQuestions);
+                    quizChoice = LogicMethod.CheckRestartStoreCondition(playOn, quizChoice);
+                }
+
+                if (quizChoice == Constant.QUIZ_TYPE_STOREANDANSWER || quizChoice == Constant.QUIZ_TYPE_ANSWERONLY)
+                {
+                    int numOfAvailableQuestions = LogicMethod.FetchQuestionsAndDisplayInstruction(quizChoice);
+                    UIMethod.DisplayUserInstruction(numOfAvailableQuestions);
+                    playOn = LogicMethod.PerformAnswerOption(theRandomQuestion);
+                    quizChoice = LogicMethod.CheckRestartAnsweringCondition(playOn, quizChoice);
+                }
+            }
+        }
     }
 }

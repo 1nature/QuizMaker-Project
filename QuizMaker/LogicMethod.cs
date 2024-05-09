@@ -37,7 +37,6 @@ namespace QuizMaker
                 numOfDisplayedQuestions++;
                 if (fetchStoredQuestions.Count < Constant.MINIMUM_NUMBER_OF_QUESTION)
                 {
-                    //UIMethod.PrintNoMoreQuestionMessage();
                     break;
                 }
                 else
@@ -87,29 +86,6 @@ namespace QuizMaker
             return exitCondition;
         }
 
-        //public static bool StopStoringQuestion(char userAnswer, List<QuestionandAnswer> questionStorage, bool restartStoring, int totalQuestion)
-        //{
-        //    if (userAnswer == Constant.QUIZ_TYPE_STOREONLY)
-        //    {
-        //        if (questionStorage.Count == totalQuestion)
-        //        {
-        //            UIMethod.ShowCompletedQuestionMessage();
-        //            restartStoring = UIMethod.RestartQuiz();
-        //            if (!restartStoring)
-        //            {
-        //                UIMethod.DisplayQuitMessage();
-        //                restartStoring = false;
-        //            }
-        //            else
-        //            {
-        //                UIMethod.ShowQuizGameInstruction();
-        //            }
-        //        }
-        //    }
-        //    return restartStoring;
-
-        //}
-
         public static QuestionandAnswer FetchRandomQuestion(List<QuestionandAnswer> randomQuestionList, Random randomQuest)
         {
             int indexOfRandomQuest = randomQuest.Next(randomQuestionList.Count);
@@ -117,30 +93,18 @@ namespace QuizMaker
             return returnedQuestion;
         }
 
-        //public static void TakeAnswerOption(int optionTotal, string theOption, List<string> optionInput)
-        //{
-        //    UIMethod.ShowOptionsMessage();
-        //    for (int Index = 0; Index < optionTotal; Index++)
-        //    {
-        //        theOption = UIMethod.AddTheOption();
-        //        optionInput.Add(theOption);
-        //    }
-        //}
-
         public static int FetchQuestionsAndDisplayInstruction(char answerOption)
         {
             var getQuestions = new List<QuestionandAnswer>();
             if (answerOption == Constant.QUIZ_TYPE_ANSWERONLY || answerOption == Constant.QUIZ_TYPE_STOREANDANSWER)
             {
                 getQuestions = LogicMethod.ReadQuizFromXml();
-                //DisplayUserInstruction(getQuestions.Count);
             }
             return getQuestions.Count;
         }
 
         public static void SerializeData(List<QuestionandAnswer> serialList)
         {
-            //XmlSerializer writer = DeclareXmlProperty();
             XmlSerializer writer = new XmlSerializer(typeof(List<QuestionandAnswer>));
 
             using (FileStream file = File.Create(Constant.THE_XML_PATH))
@@ -149,12 +113,9 @@ namespace QuizMaker
             }
         }
 
-
         public static List<QuestionandAnswer> ReadQuizFromXml()
         {
-            //XmlSerializer theVariable = DeclareXmlProperty();
             XmlSerializer theVariable = new XmlSerializer(typeof(List<QuestionandAnswer>));
-
             List<QuestionandAnswer> storedList = null;
 
             if (File.Exists(Constant.THE_XML_PATH))
@@ -163,8 +124,19 @@ namespace QuizMaker
                 {
                     storedList = theVariable.Deserialize(file) as List<QuestionandAnswer>;
                 }
-            }//maybe an else here should the opposite be the case?
+            }
             return storedList;
+        }
+
+        public static bool ContinueOrQuitQuiz(int returnValue)
+        {
+            bool continueOrQuitVariable;
+            if (returnValue == Constant.QUIZ_DECISION_YES)
+            {
+                continueOrQuitVariable = true;
+            }
+            else { continueOrQuitVariable = false; }
+            return continueOrQuitVariable;
         }
     }
 }
